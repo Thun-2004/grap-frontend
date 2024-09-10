@@ -1,0 +1,1 @@
+store frequent used js function like calculate estimated queue 
