@@ -1,10 +1,12 @@
-import { useState } from 'react'
 import './App.css'
+import DashBoard from './pages/Main/Dashboard'
 
-export default function App() {
+const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <>
+      <DashBoard></DashBoard>
+    </>
   )
 }
+
+export default App;
