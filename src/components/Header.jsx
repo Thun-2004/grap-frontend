@@ -1,19 +1,28 @@
 import { React, useState } from 'react'
 
-const Header = (props) => {
-    const {handleShowModel} = props; 
+const Header = () => {
     return (
-        <div className="bg-white fixed top-0 left-0 w-full flex h-28 items-center shadow-lg z-10 justify-around">
-            <h1>QuickDish</h1>
-            {/* <button onClick={handleShowModel}> */}
-            <div className="flex flex-col">
-                <h1>Location</h1>
-                <input type="text" name="search" placeholder="Search talk" autocomplete="off" aria-label="Search talk" className="w-full pr-3 pl-10 py-2 font-semibold placeholder-gray-500 text-black rounded-2xl border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2"></input>
+        <div className="bg-white h-28 w-full shadow-lg ">
+            <div className="flex items-center">
+                {/* <button onClick={handleShowModel}> */}
+                <div className="flex w-full flex-col m-5 ml-16">
+                    <h1 className="mb-2">Location</h1>
+                    <input type="text" 
+                        name="search" 
+                        placeholder="Search talk" 
+                        autocomplete="off" 
+                        aria-label="Search talk" 
+                        className="w-full pr-3 pl-10 py-2 font-semibold placeholder-gray-500 text-black rounded-2xl border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2"/>
+                </div>
+                <div className="mt-5 mr-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="30">
+                        <path d="M0 24C0 10.7 10.7 0 24 0L69.5 0c22 0 41.5 12.8 50.6 32l411 0c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3l-288.5 0 5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5L488 336c13.3 0 24 10.7 24 24s-10.7 24-24 24l-288.3 0c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5L24 48C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/>
+                    </svg>
+                </div>
             </div>
-            <h1>Cart</h1>
-            {/* <button onClick="">
-                <i className="text-white fa-solid fa-cart-shopping"></i>
-            </button> */}
+            <div className="">
+                <h2>display tags when click search bar</h2>
+            </div>
         </div>
     )
 }
