@@ -1,0 +1,123 @@
+[
+    {
+        "id" : 1, 
+        "name" : "Canteen 1",
+        "foodlist" : [
+            {
+                "id" : 1, 
+                "name" : "Chicken Rice1",
+                "price" : 3.50,
+                "rate" : 4.5
+            }, 
+            {
+                "id" : 2, 
+                "name" : "Nasi Lemak1",
+                "price" : 2.50, 
+                "rate" : 4.5
+            }, 
+            {
+                "id" : 3, 
+                "name" : "Mee Goreng1",
+                "price" : 3.00, 
+                "rate" : 4.5
+            }
+        ]
+    }, 
+    {
+        "id" : 2, 
+        "name" : "Canteen 2",
+        "foodlist" : [
+            {
+                "id" : 1, 
+                "name" : "Chicken Rice2",
+                "price" : 3.50,
+                "rate" : 4.5
+            }, 
+            {
+                "id" : 2, 
+                "name" : "Nasi Lemak2",
+                "price" : 2.50, 
+                "rate" : 4.5
+            }, 
+            {
+                "id" : 3, 
+                "name" : "Mee Goreng2",
+                "price" : 3.00, 
+                "rate" : 4.5
+            }
+        ]
+    }, 
+    {
+        "id" : 3, 
+        "name" : "Canteen 3",
+        "foodlist" : [
+            {
+                "id" : 1, 
+                "name" : "Chicken Rice3",
+                "price" : 3.50,
+                "rate" : 4.5
+            }, 
+            {
+                "id" : 2, 
+                "name" : "Nasi Lemak3",
+                "price" : 2.50, 
+                "rate" : 4.5
+            }, 
+            {
+                "id" : 3, 
+                "name" : "Mee Goreng3",
+                "price" : 3.00, 
+                "rate" : 4.5
+            }
+        ]
+    }, 
+    {
+        "id" : 4, 
+        "name" : "Canteen 4",
+        "foodlist" : [
+            {
+                "id" : 1, 
+                "name" : "Chicken Rice4",
+                "price" : 3.50,
+                "rate" : 4.5
+            }, 
+            {
+                "id" : 2, 
+                "name" : "Nasi Lemak4",
+                "price" : 2.50, 
+                "rate" : 4.5
+            }, 
+            {
+                "id" : 3, 
+                "name" : "Mee Goreng4",
+                "price" : 3.00, 
+                "rate" : 4.5
+            }
+        ]
+    },
+    {
+        "id" : 5, 
+        "name" : "Canteen 5",
+        "foodlist" : [
+            {
+                "id" : 1, 
+                "name" : "Chicken Rice5",
+                "price" : 3.50,
+                "rate" : 4.5
+            }, 
+            {
+                "id" : 2, 
+                "name" : "Nasi Lemak5",
+                "price" : 2.50, 
+                "rate" : 4.5
+            }, 
+            {
+                "id" : 3, 
+                "name" : "Mee Goreng5",
+                "price" : 3.00, 
+                "rate" : 4.5
+            }
+        ]
+    }
+
+]
