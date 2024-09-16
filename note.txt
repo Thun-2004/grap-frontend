@@ -1,0 +1,38 @@
+devDependencies
+tailwind -> PostCSS and PurgeCSS 
+add extension eslint
+
+use Redis to cache API
+
+
+Guildline
+src/
+├── api/               // API calls and related logic
+│   ├── index.js       // Main export file (optional)
+│   ├── canteenAPI.js  // API calls for canteen-related data
+│   ├── authAPI.js     // API calls for authentication (login, signup, etc.)
+│   ├── userAPI.js     // API calls for user profile, settings, etc.
+│   └── cartAPI.js     // API calls related to the shopping cart
+├── context/           // React Context for managing local/global state
+│   ├── CartContext.js // Cart context with provider and reducer
+│   ├── UserContext.js // User context to manage authentication and profile
+├── components/        // UI components of the app
+│   ├── CanteenList.js
+│   ├── Cart.js
+│   └── Navbar.js
+├── redux/             // Redux-related files (if you're using Redux)
+│   ├── store.js       // Redux store configuration
+│   ├── cartSlice.js   // Redux slice for cart
+│   └── userSlice.js   // Redux slice for user
+├── hooks/             // Custom hooks (e.g., useCart, useAuth)
+│   ├── useCart.js
+│   ├── useAuth.js
+├── pages/             // Page-level components
+│   ├── HomePage.js
+│   ├── CartPage.js
+│   └── LoginPage.js
+├── utils/             // Utility functions (formatting, helpers, etc.)
+├── App.js             // Main application component
+└── index.js           // Entry point for React app
+
+

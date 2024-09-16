@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CanteenCard from "./CanteenCard";
+import { getCanteenData } from "../api/canteenApi";
 
 const CarouselComponent = () => {
-    const item = [
-        { id: 1, name: "Item 1",  img:""},
-        { id: 2, name: "Item 2",  img:""},
-        { id: 3, name: "Item 3",  img:""},
-        { id: 4, name: "Item 4",  img:""},
-        { id: 5, name: "Item 5",  img:""},
-    ];
+    const [canteens, setCanteens] = useState(null); 
+    useEffect(() => {
+        const fetchData = async() => {
+            try{
+                const data = await getCanteenData(); 
+                setCanteens(data);
+            }catch(error){
+                console.log("Error fetching: ", error);
+            }
+        };
+        fetchData();
+    }, []);  //empty arry = run once on mount
+
+    if (canteens == null){
+        return <div> Loading... </div>;
+    }
+
+    const item = canteens.map(canteen => ({
+        id: canteen.id,
+        name: canteen.name,
+        img: canteen.img
+    }))
 
     const responsive = {
         superLargeDesktop: {

@@ -15,6 +15,7 @@ const Dashboard = () => {
                 </div>
                 <div className="absolute top-32 left-72 right-10">
                     <Home/>
+                    
                 </div>
             </div>
         </div>
