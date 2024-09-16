@@ -1,1 +1,2 @@
-store frequent used js function like calculate estimated queue 
+store frequent used js function like calculate estimated queue , update status
+local storage helper 
