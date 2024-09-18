@@ -27,7 +27,7 @@ const RestaurantCard = ( {storeName, food, img, canteenName, busyness, queue, ra
                         {/* needed: fetch from db */}
                         <div className="flex">
                             <IdleTag name="Thai" width="20" height="2"/>
-                            <IdleTag name="Quick" width="20" height="2"/>
+                            <IdleTag name="CanteenA" width="20" height="2"/>
                         </div>
                     </div>
                 </div>

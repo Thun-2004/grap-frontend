@@ -6,6 +6,10 @@
   @apply text-white hover:text-black hover:bg-white rounded-full w-48 text-base px-4 py-2.5 ml-10 mr-5 ;
 }
 
+.general-button {
+  @apply  inline-flex  p-2 px-5 text-white bg-gradient-to-bl hover:from-pink-500 hover:to-orange-600 hover:bg-gradient-to-bl  from-orange-400 to-pink-500 justify-center align-middle text-center rounded-full ;
+}
+
 .sidebar-icon {
   @apply size-6 mr-3 ; 
 }

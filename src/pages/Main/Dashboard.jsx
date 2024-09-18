@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import SideBar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import Home from "./Home";
+import PurchaseHistory from "./PurchaseHistory";
+// import MyProfile from "./MyProfile";
 
 //sidebar, header, link to other pages
 const Dashboard = () => {
@@ -16,7 +18,9 @@ const Dashboard = () => {
                     <Header/>
                 </div>
                 <div className="absolute top-32 left-72 right-10">
-                    <Home/>
+                    {/* <Home/> */}
+                    <PurchaseHistory/>
+                    {/* <MyProfile/> */}
                 </div>
             </div>
         </div>
