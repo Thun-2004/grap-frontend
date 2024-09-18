@@ -18,6 +18,10 @@
   @apply text-xl font-bold text-black;
 }
 
+.sub-title {
+  @apply text-lg font-bold text-black;
+}
+
 .card-info{
   @apply text-base text-gray-400;
 }

@@ -6,7 +6,7 @@ const PurchaseCard = ({date, time, name, price, canteen, userLocation, orderStat
     // date : 1 Sep 24, 11:09
     return (
         <>
-            <div className="flex width-full h-36 mt-2">
+            <div className="flex width-full h-36 mt-2 ">
                 <div className="flex h-full w-28 justify-center align-middle">
                     <img className="w-20 h-20 rounded-full bg-slate-500 mt-2"/>
                 </div>
@@ -17,7 +17,7 @@ const PurchaseCard = ({date, time, name, price, canteen, userLocation, orderStat
                             <FontAwesomeIcon className="text-red-600 size-5 mr-1" icon={faLocationDot} />
                             <h2 className=" text-black text-md w-3/5">{name} - {canteen}</h2>
                         </div>
-                        <h2>฿{price}</h2>
+                        <h2 className="text-md w-36">Total: ฿{price}</h2>
                     </div>
                     <div className="flex">
                         <FontAwesomeIcon className="text-green-700 size-5 mr-1" icon={faLocationDot} />
@@ -33,7 +33,7 @@ const PurchaseCard = ({date, time, name, price, canteen, userLocation, orderStat
                     
                 </div>
             </div>
-            <hr className="border-t-2 border-gray-400 mb-2"/>
+            <hr className="border-t-2 border-gray-400 mt-2 mb-2"/>
         </>
         
     );
