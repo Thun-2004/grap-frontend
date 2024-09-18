@@ -10,11 +10,11 @@ const Home = () => {
                 {/* for q */}
             </div>
             <div className="">
-                <h1>Nearby Canteen</h1>
+                <h1 className='title'>Nearby Canteen</h1>
                 <CarouselComponent/>
             </div>
             <div className="">
-                <h1>Food from your nearest: Canteen A</h1>
+                <h1 className='title'>Food from your nearest: Canteen A</h1>
                 <RestaurantCard/>
                 <RestaurantCard/>
             </div>

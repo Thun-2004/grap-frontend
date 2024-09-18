@@ -36,3 +36,6 @@ src/
 └── index.js           // Entry point for React app
 
 
+
+Canteen : make image inside
+sidebar: responsive
