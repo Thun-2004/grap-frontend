@@ -51,7 +51,9 @@ const CarouselComponent = () => {
     return (
             <Carousel className="z-0" responsive={responsive} renderDotsOutside={true}>
                 {item.map(it => (
-                    <CanteenCard key={it.id} canteenName={it.name} img={it.img}/>
+                    // <CanteenCard key={it.id} canteenName={it.name} img={it.img}/>
+                    <CanteenCard key={it.id} canteenName={it.name}/>
+
                 ))}
             </Carousel>
     );

@@ -3,5 +3,20 @@
 @tailwind utilities;
 
 .sidebar-button {
-  @apply text-white hover:text-black hover:bg-white font-medium rounded-full w-full text-sm px-4 py-2.5  ;
+  @apply text-white hover:text-black hover:bg-white rounded-full w-48 text-base px-4 py-2.5 ml-10 mr-5 ;
 }
+
+.sidebar-icon {
+  @apply size-6 mr-3 ; 
+}
+
+.title {
+  @apply text-xl font-bold text-black;
+}
+
+.card-info{
+  @apply text-base text-gray-400;
+}
+
+
+

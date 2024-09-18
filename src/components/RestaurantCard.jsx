@@ -1,17 +1,37 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { faFlag } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react'; 
 
 const RestaurantCard = ( {storeName, food, img, canteenName, busyness, queue, rating} ) => {
-    return (
-        <div className="bg-slate-300 w-full h-52 mt-3 mb-6 ml-10 rounded-lg shadow-lg relative">
-            <img src={ img } alt="" />
-            <h2 className="absolute bottom-2 left-2">Restaurant</h2>
-            <button type="button">
-                {/* change to black when click  */}
-                <FontAwesomeIcon className="absolute right-4 size-7" icon={faFlag} />
-            </button>
-            
+    const [flag, setFlag] = useState(false);
+    const handleFlag = () => {
+        setFlag(!flag);
+    }
 
+    return (
+        <div className="bg-white border-2 w-4/5 h-52 mt-3 mb-6 ml-10 rounded-xl shadow-md hover:shadow-lg relative">
+            <div className="flex p-3 h-full">
+                <div className="w-56 bg-slate-100">
+                    {/* <img src={ img } alt="" /> */}
+                    <img className ="h-full rounded-xl"src="https://i0.wp.com/tokyotreatblog.wpcomstaging.com/wp-content/uploads/2022/05/Shutterstock_751789537-min.jpg?fit=4096%2C2731&ssl=1" alt="" />
+                </div>
+                <div className="flex flex-col ml-4">
+                    <h2 className="title">Restaurant</h2>
+                    <div className="space-y-1 mt-2">
+                        <h2 className="card-info">Status</h2>
+                        <h2 className="card-info">Current Queue</h2>
+                        <h2 className="card-info">Rating and Review</h2>
+                        <h2 className="card-info">Price</h2>
+                    </div>
+                </div>
+                <button type="button" onClick={handleFlag}>
+                {/* change to black when click  */}
+                    { flag ? <FontAwesomeIcon className="absolute right-4 top-3 size-7" icon={faFlag} /> : null}
+                    <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-4 top-3 size-7" viewBox="0 0 448 512"><path d="M48 24C48 10.7 37.3 0 24 0S0 10.7 0 24L0 64 0 350.5 0 400l0 88c0 13.3 10.7 24 24 24s24-10.7 24-24l0-100 80.3-20.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30l0-279.7c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L48 52l0-28zm0 77.5l96.6-24.2c27-6.7 55.5-3.6 80.4 8.8c54.9 27.4 118.7 29.7 175 6.8l0 241.8-24.4 9.1c-33.7 12.6-71.2 10.7-103.4-5.4c-48.2-24.1-103.3-30.1-155.6-17.1L48 338.5l0-237z"/></svg>
+                </button>
+            </div>
+            
+            
         </div>
     );
 }

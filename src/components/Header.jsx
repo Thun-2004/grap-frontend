@@ -2,10 +2,13 @@ import { React, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { faMagnifyingGlass,faShoppingCart,faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import Tag from './Tag';
+import { remove } from '../utils/array';
 
 const Header = () => {
     const [focus, setFocus] = useState(false);
     const [closeTag, setCloseTag] = useState(false);
+    const [clickedFood, setclickedFood] = useState([]);
+
     const handleFocus = () => {
         console.log("focus");
         setCloseTag(false);
@@ -15,6 +18,20 @@ const Header = () => {
         console.log("close tag");
         setCloseTag(true);
     }
+
+    const handleButtonClick = (foodName) => {
+        setclickedFood((prevClickedFood) => {
+            if(prevClickedFood.includes(foodName)){
+                console.log("remove" + foodName);
+                return remove(prevClickedFood, foodName);
+            }else{
+                console.log("pick" + foodName);
+                return [...prevClickedFood, foodName]; 
+            }
+        });
+
+    }
+
     return (
         <div className="bg-white w-full shadow-lg ">
             <div className="flex items-center">
@@ -53,20 +70,22 @@ const Header = () => {
                         <FontAwesomeIcon className="absolute right-7 size-6" icon={faCircleXmark} />
                     </button>
                     
-                    <div className="flex justify-start space-x-6">
+                    {/* <div className="flex justify-start space-x-6">
                         <Tag name="Canteen1"/>
                         <Tag name="Canteen2"/>
                         <Tag name="Canteen3"/>
                         <Tag name="Canteen4"/>
                         <Tag name="Canteen5"/>
-                    </div>
+                    </div> */}
                     <h1>Recent & Popular food</h1>
                     <div className="flex justify-start space-x-6 mt-3">
-                        <Tag name="Krapao"/>
-                        <Tag name="Burger"/>
-                        <Tag name="Padthai"/>
-                        <Tag name="Japanese food"/>
-                        <Tag name="Dog"/>
+                        {
+                            //global state : user's prev order
+                            ['Krapao', 'Burger', 'Padthai', 'Japanese food', 'Dog'].map((foodName) => (
+                                <Tag key={foodName} name={foodName} handleButtonClick={handleButtonClick}/>
+                            ))
+                        }
+                        
                     </div>
                     
                 </div> : null
