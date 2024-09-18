@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 const Tag = ({ name, handleButtonClick}) => {
     // eslint-disable-next-line no-constant-condition
     const [isClicked, setIsClicked] = useState(false);

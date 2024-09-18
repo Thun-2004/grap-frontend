@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { faFlag } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react'; 
+import IdleTag from './idleTag';
 
 const RestaurantCard = ( {storeName, food, img, canteenName, busyness, queue, rating} ) => {
     const [flag, setFlag] = useState(false);
@@ -22,6 +23,12 @@ const RestaurantCard = ( {storeName, food, img, canteenName, busyness, queue, ra
                         <h2 className="card-info">Current Queue</h2>
                         <h2 className="card-info">Rating and Review</h2>
                         <h2 className="card-info">Price</h2>
+                        
+                        {/* needed: fetch from db */}
+                        <div className="flex">
+                            <IdleTag name="Thai" width="20" height="2"/>
+                            <IdleTag name="Quick" width="20" height="2"/>
+                        </div>
                     </div>
                 </div>
                 <button type="button" onClick={handleFlag}>
