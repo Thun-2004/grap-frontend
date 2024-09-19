@@ -34,8 +34,8 @@ const Dashboard = () => {
                 </div>
                 {/* <div className="absolute top-32 right-10 lg:left-72 md:left-60 "> */}
                 <div className="absolute top-32 right-0 left-0 lg:left-72 md:left-60 sm:left-0">
-                    <Home/>
-                    {/* <PurchaseHistory/> */}
+                    {/* <Home/> */}
+                    <PurchaseHistory/>
                     {/* <MyProfile/> */}
                 </div>
             </div>

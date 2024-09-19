@@ -15,7 +15,7 @@ const PurchaseCard = ({date, time, name, price, canteen, userLocation, orderStat
                     <div className="flex justify-between">
                         <div className="flex w-full">
                             <FontAwesomeIcon className="text-red-600 size-5 mr-1" icon={faLocationDot} />
-                            <h2 className=" text-black text-md w-3/5">{name} - {canteen}</h2>
+                            <h2 className=" text-black text-md w-5/6">{name} - {canteen}</h2>
                         </div>
                         <h2 className="text-md w-36">Total: ฿{price}</h2>
                     </div>
@@ -31,9 +31,10 @@ const PurchaseCard = ({date, time, name, price, canteen, userLocation, orderStat
                         </button> 
                     </div>
                     
+                    
                 </div>
             </div>
-            <hr className="border-t-2 border-gray-400 mt-2 mb-2"/>
+            <hr className="border-t-2 border-gray-400 mt-2 mb-4 md:mt-2 lg:mt-2"/>
         </>
         
     );
