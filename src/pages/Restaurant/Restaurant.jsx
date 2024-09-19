@@ -7,6 +7,8 @@ import {
   faClock,
   faLocationDot,
   faClose,
+  faEdit,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import {
@@ -18,7 +20,126 @@ import {
 } from '../../api/restaurantApi';
 import { LoadingPage } from '../../components/LoadingPage';
 
-const OrderingPopup = ({ restaurant, menu_id, onClose, onConfirmation }) => {
+const BasketPopup = ({ orders, restaurant, onClose }) => {
+  return (
+    <div
+      className="
+        fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-10 flex
+      "
+    >
+      <div
+        className="
+          bg-white my-10 rounded-2xl drop-shadow-2xl p-6 flex flex-col 
+          mx-auto md:min-w-[50%]
+        "
+      >
+        <FontAwesomeIcon
+          icon={faClose}
+          className="absolute self-end hover:cursor-pointer z-10"
+          onClick={() => onClose()}
+        />
+
+        <div className="flex flex-col justify-between h-full">
+          <div className="overflow-y-auto flex flex-col">
+            <h1 className="text-2xl font-semibold">Basket</h1>
+            <hr className="my-2" />
+            <div className="flex flex-col gap-y-2">
+              {orders.map((order) => (
+                <div
+                  className="
+                    bg-slate-50 shadow-inner rounded-md flex flex-row 
+                    overflow-hidden p-2
+                  "
+                >
+                  <img
+                    src={URL.createObjectURL(
+                      restaurant.menus[order.menu_id].image,
+                    )}
+                    className="
+                      aspect-square h-24 sm:h-32 object-cover object-center rounded-xl
+                      drop-shadow-md self-center
+                    "
+                  />
+                  <div className="flex flex-row justify-between flex-grow">
+                    <div className="flex flex-col px-4 flex-grow">
+                      <div className="text-lg font-semibold">
+                        {restaurant.menus[order.menu_id].name}
+                      </div>
+                      <hr className="my-1"></hr>
+                      <div className="text-sm font-extralight">
+                        {order.request == ''
+                          ? 'No Extra Request'
+                          : order.request}
+                      </div>
+                    </div>
+                    <div
+                      className="
+                        flex flex-col items-end pr-2 justify-between
+                      "
+                    >
+                      <div className="text-lg font-semibold">
+                        {`฿${calculatePrice(
+                          restaurant,
+                          order.menu_id,
+                          order.options,
+                          order.quantity,
+                        )}`}
+                      </div>
+                      <div className="flex items-center">
+                        <div className="text-sm inline">x</div>
+                        <div className="text-lg font-semibold pl-1">
+                          {` ${order.quantity}`}
+                        </div>
+                      </div>
+                      <div className="flex flex-row gap-x-2">
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          className="
+                            hover:cursor-pointer hover:text-orange-400
+                          "
+                        />
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className="hover:cursor-pointer hover:text-red-400"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-row justify-center mt-4">
+            <div
+              className="
+                bg-gradient-to-r from-orange-300 to-red-400 p-3 rounded-xl
+                drop-shadow-lg hover:cursor-pointer hover:shadow-2xl flex
+                flex-row gap-x-20 
+              "
+            >
+              <FontAwesomeIcon icon={faBasketShopping} className="text-2xl" />
+              <div className="">Proceed</div>
+              <div>{`฿${orders.reduce(
+                (acc, x) =>
+                  acc.plus(
+                    calculatePrice(
+                      restaurant,
+                      x.menu_id,
+                      x.options,
+                      x.quantity,
+                    ),
+                  ),
+                new Decimal(0),
+              )}`}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const OrderPopup = ({ restaurant, menu_id, onClose, onConfirmation }) => {
   const [ordering, setOrdering] = useState({
     quantity: 1,
     options: [],
@@ -33,14 +154,14 @@ const OrderingPopup = ({ restaurant, menu_id, onClose, onConfirmation }) => {
   return (
     <div
       className="
-          fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-10 flex
-        "
+        fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-10 flex
+      "
     >
       <div
         className="
-            bg-white my-10 rounded-2xl drop-shadow-2xl p-6 flex flex-col 
-            mx-auto md:w-[50%]
-          "
+          bg-white my-10 rounded-2xl drop-shadow-2xl p-6 flex flex-col 
+          mx-auto md:min-w-[50%]
+        "
       >
         <FontAwesomeIcon
           icon={faClose}
@@ -182,7 +303,6 @@ const OrderingPopup = ({ restaurant, menu_id, onClose, onConfirmation }) => {
                   "
                   onClick={() => {
                     if (ordering.quantity == 1) {
-                      setOrdering(undefined);
                       return;
                     }
 
@@ -256,7 +376,7 @@ const calculatePrice = (restaurant, menu_id, options, quantity) => {
 
 const MainPage = ({ restaurant }) => {
   const [order, setOrder] = useState({
-    ordering: null,
+    popup: null,
     orders: [],
   });
 
@@ -276,6 +396,59 @@ const MainPage = ({ restaurant }) => {
         ),
       new Decimal(0),
     );
+
+  const Popup = ({ order, setOrder }) => {
+    if (order.popup == null) {
+      return null;
+    }
+
+    console.log(order.popup);
+
+    if (order.popup.type === 'order') {
+      return (
+        <OrderPopup
+          menu_id={order.popup.menu_id}
+          restaurant={restaurant}
+          onConfirmation={(newOrder) => {
+            setOrder({
+              popup: null,
+              orders: [
+                ...order.orders,
+                {
+                  menu_id: order.popup.menu_id,
+                  quantity: newOrder.quantity,
+                  options: newOrder.options,
+                  request: newOrder.request,
+                },
+              ],
+            });
+          }}
+          onClose={() => {
+            setOrder({
+              ...order,
+              popup: null,
+            });
+          }}
+        />
+      );
+    } else if (order.popup.type === 'basket') {
+      console.log('rendering basket');
+      return (
+        <BasketPopup
+          orders={order.orders}
+          restaurant={restaurant}
+          onClose={() =>
+            setOrder({
+              ...order,
+              popup: null,
+            })
+          }
+        />
+      );
+    } else {
+      return null;
+    }
+  };
 
   return (
     <div className="mx-auto">
@@ -316,8 +489,8 @@ const MainPage = ({ restaurant }) => {
       </div>
       <div
         className="
-            flex flex-wrap my-10 mx-8 justify-center gap-x-5 gap-y-5
-          "
+          flex flex-wrap my-10 mx-8 justify-center gap-x-5 gap-y-5
+        "
       >
         {Object.entries(restaurant.menus).map(([id, menu]) => (
           <div
@@ -356,7 +529,10 @@ const MainPage = ({ restaurant }) => {
                 onClick={async () => {
                   setOrder({
                     ...order,
-                    ordering: id,
+                    popup: {
+                      type: 'order',
+                      menu_id: id,
+                    },
                   });
                 }}
               />
@@ -368,8 +544,21 @@ const MainPage = ({ restaurant }) => {
         className="
           sticky bottom-5 mx-auto text-center bg-gradient-to-r from-orange-300 
           to-red-400 rounded-xl p-4 z-2 drop-shadow-xl flex min-w-50
-          justify-between w-[50%]
+          justify-between w-[50%] hover:cursor-pointer hover:shadow-2xl
         "
+        onClick={
+          calculateTotalQuantity() == 0
+            ? null
+            : () => {
+                console.log('basket');
+                setOrder({
+                  ...order,
+                  popup: {
+                    type: 'basket',
+                  },
+                });
+              }
+        }
       >
         <div className="flex gap-x-2">
           <FontAwesomeIcon icon={faBasketShopping} className="text-2xl" />
@@ -381,32 +570,7 @@ const MainPage = ({ restaurant }) => {
             : `฿${calculateTotalPrice()}`}
         </div>
       </div>
-      {order.ordering == null ? null : (
-        <OrderingPopup
-          menu_id={order.ordering}
-          restaurant={restaurant}
-          onConfirmation={(newOrder) => {
-            setOrder({
-              ordering: null,
-              orders: [
-                ...order.orders,
-                {
-                  menu_id: order.ordering,
-                  quantity: newOrder.quantity,
-                  options: newOrder.options,
-                  request: newOrder.request,
-                },
-              ],
-            });
-          }}
-          onClose={() => {
-            setOrder({
-              ...order,
-              ordering: null,
-            });
-          }}
-        />
-      )}
+      <Popup order={order} setOrder={setOrder} />
     </div>
   );
 };
@@ -447,7 +611,6 @@ const Menu = ({ restaurantID }) => {
       setRestaurant(restaurantData);
     };
 
-    console.log('Fetching restaurant data');
     getData();
   }, []);
 
