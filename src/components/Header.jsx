@@ -29,11 +29,10 @@ const Header = () => {
                 return [...prevClickedFood, foodName]; 
             }
         });
-
     }
 
     return (
-        <div className="bg-white w-full shadow-lg ">
+        <div className="bg-white w-full shadow-lg left-0">
             <div className="flex items-center">
                 {/* <button onClick={handleShowModel}> */}
                 <div className="flex w-full flex-col m-5 ml-8">
@@ -46,9 +45,9 @@ const Header = () => {
                         {/* <FontAwesomeIcon className="size-8 mr-3 mt-1" icon={faMagnifyingGlass} /> */}
                         <div className="relative w-full">
                             <input type="text"
-                                name="search" 
+                                name="search"
                                 placeholder="Search talk"
-                                autoComplete="off" 
+                                autoComplete="off"
                                 aria-label="Search talk"
                                 onFocus={handleFocus}
                                 className="w-full pr-3 pl-10 py-2 font-semibold placeholder-gray-500 text-black rounded-2xl border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2"/>

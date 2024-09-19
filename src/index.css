@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+
+body{
+  min-width: 693px;
+}
 .sidebar-button {
   @apply text-white hover:text-black hover:bg-white rounded-full w-48 text-base px-4 py-2.5 ml-10 mr-5 ;
 }

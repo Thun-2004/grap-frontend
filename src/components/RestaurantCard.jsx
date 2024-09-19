@@ -10,7 +10,7 @@ const RestaurantCard = ( {storeName, food, img, canteenName, busyness, queue, ra
     }
 
     return (
-        <div className="bg-white border-2 w-4/5 h-52 mt-3 mb-6 ml-10 rounded-xl shadow-md hover:shadow-lg relative">
+        <div className="bg-white border-2 w-4/5 h-52 mt-3 mb-6 ml-10 rounded-xl shadow-md hover:shadow-lg relative sm:w-5/6">
             <div className="flex p-3 h-full">
                 <div className="w-56 bg-slate-100">
                     {/* <img src={ img } alt="" /> */}
