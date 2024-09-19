@@ -30,5 +30,20 @@ body{
   @apply text-base text-gray-400;
 }
 
+.carousel-item-spacing{
+  padding-right: 10px; 
+}
+
+@media (max-width: 500px){
+  .carousel-item-spacing{
+    padding-right: 10px; 
+  }
+}
+
+@media (max-width: 1200px){
+  .carousel-item-spacing{
+    padding-right: 10px; 
+  }
+}
 
 

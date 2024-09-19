@@ -31,25 +31,25 @@ const CarouselComponent = () => {
     const responsive = {
         superLargeDesktop: {
         // the naming can be any, depends on you.
-        breakpoint: { max: 3000, min: 1024 },
+        breakpoint: { max: 3000, min: 1300 },
         items: 4
         },
         desktop: {
-        breakpoint: { max: 1024, min: 464 },
+        breakpoint: { max: 1300, min: 950 },
         items: 3
         },
         tablet: {
-        breakpoint: { max: 464, min: 0 },
+        breakpoint: { max: 950, min: 600 },
         items: 2
         },
         mobile: {
-        breakpoint: { max: 464, min: 0 },
+        breakpoint: { max: 600, min: 0 },
         items: 1
         }
     };
 
     return (
-            <Carousel className="z-0" responsive={responsive} renderDotsOutside={true}>
+            <Carousel className="z-0" responsive={responsive} renderDotsOutside={true} itemClass="carousel-item-spacing">
                 {item.map(it => (
                     // <CanteenCard key={it.id} canteenName={it.name} img={it.img}/>
                     <CanteenCard key={it.id} canteenName={it.name}/>
