@@ -9,6 +9,7 @@ import {
   faClose,
   faEdit,
   faTrash,
+  faShoppingCart,
 } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import {
@@ -21,7 +22,34 @@ import {
 import { LoadingPage } from '../../components/LoadingPage';
 
 const BasketPopup = ({ orders, restaurant, onClose }) => {
-  return (
+  const [thisOrders, setThisOrders] = useState([...orders]);
+  const [customizing, setCustomizing] = useState(null);
+
+  return customizing != null ? (
+    <OrderPopup
+      restaurant={restaurant}
+      onClose={() => {
+        setCustomizing(null);
+      }}
+      menu_id={customizing.menu_id}
+      defaultQuantity={customizing.quantity}
+      defaultOptions={customizing.options}
+      defaultRequest={customizing.request}
+      onConfirmation={(newOrder) => {
+        let replacingIndex = thisOrders.findIndex((x) => x === customizing);
+        thisOrders[replacingIndex] = {
+          menu_id: customizing.menu_id,
+          quantity: newOrder.quantity,
+          options: newOrder.options,
+          request: newOrder.request,
+        };
+        setThisOrders([...thisOrders]);
+
+        setCustomizing(null);
+      }}
+      confirmationText={'Confirm'}
+    />
+  ) : (
     <div
       className="
         fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-10 flex
@@ -30,96 +58,129 @@ const BasketPopup = ({ orders, restaurant, onClose }) => {
       <div
         className="
           bg-white my-10 rounded-2xl drop-shadow-2xl p-6 flex flex-col 
-          mx-auto md:min-w-[50%]
+          mx-auto min-w-[80%] md:min-w-[70%]
         "
       >
         <FontAwesomeIcon
           icon={faClose}
           className="absolute self-end hover:cursor-pointer z-10"
-          onClick={() => onClose()}
+          onClick={() => {
+            onClose(thisOrders);
+          }}
         />
 
         <div className="flex flex-col justify-between h-full">
-          <div className="overflow-y-auto flex flex-col">
+          <div
+            className="overflow-y-auto flex flex-col flex-grow"
+            id="orders-list"
+          >
             <h1 className="text-2xl font-semibold">Basket</h1>
             <hr className="my-2" />
+            {thisOrders.length == 0 ? (
+              <div
+                className="
+                flex flex-row flex-grow text-center justify-center
+              "
+              >
+                <div className="self-center flex flex-col gap-y-2">
+                  <FontAwesomeIcon icon={faShoppingCart} className="text-4xl" />
+                  <div className="text-lg font-extralight italic">No Order</div>
+                </div>
+              </div>
+            ) : null}
             <div className="flex flex-col gap-y-2">
-              {orders.map((order) => (
-                <div
-                  className="
-                    bg-slate-50 shadow-inner rounded-md flex flex-row 
-                    overflow-hidden p-2
-                  "
-                >
-                  <img
-                    src={URL.createObjectURL(
-                      restaurant.menus[order.menu_id].image,
-                    )}
-                    className="
-                      aspect-square h-24 sm:h-32 object-cover object-center rounded-xl
-                      drop-shadow-md self-center
-                    "
-                  />
-                  <div className="flex flex-row justify-between flex-grow">
-                    <div className="flex flex-col px-4 flex-grow">
-                      <div className="text-lg font-semibold">
-                        {restaurant.menus[order.menu_id].name}
-                      </div>
-                      <hr className="my-1"></hr>
-                      <div className="text-sm font-extralight">
-                        {order.request == ''
-                          ? 'No Extra Request'
-                          : order.request}
-                      </div>
-                    </div>
+              {thisOrders.length == 0
+                ? null
+                : thisOrders.map((order) => (
                     <div
                       className="
+                    bg-slate-50 shadow-inner rounded-md flex flex-row 
+                      overflow-hidden p-2
+                  "
+                    >
+                      <img
+                        src={URL.createObjectURL(
+                          restaurant.menus[order.menu_id].image,
+                        )}
+                        className="
+                        aspect-square h-24 sm:h-32 object-cover object-
+                        center rounded-xl drop-shadow-md self-center
+                      "
+                      />
+                      <div className="flex flex-row justify-between flex-grow">
+                        <div className="flex flex-col px-4 flex-grow">
+                          <div className="text-lg font-semibold">
+                            {restaurant.menus[order.menu_id].name}
+                          </div>
+                          <hr className="my-1"></hr>
+                          <div className="text-sm font-extralight">
+                            {order.request == ''
+                              ? 'No Extra Request'
+                              : order.request}
+                          </div>
+                        </div>
+                        <div
+                          className="
                         flex flex-col items-end pr-2 justify-between
                       "
-                    >
-                      <div className="text-lg font-semibold">
-                        {`฿${calculatePrice(
-                          restaurant,
-                          order.menu_id,
-                          order.options,
-                          order.quantity,
-                        )}`}
-                      </div>
-                      <div className="flex items-center">
-                        <div className="text-sm inline">x</div>
-                        <div className="text-lg font-semibold pl-1">
-                          {` ${order.quantity}`}
+                        >
+                          <div className="text-lg font-semibold">
+                            {`฿${calculatePrice(
+                              restaurant,
+                              order.menu_id,
+                              order.options,
+                              order.quantity,
+                            )}`}
+                          </div>
+                          <div className="flex items-center">
+                            <div className="text-sm inline">x</div>
+                            <div className="text-lg font-semibold pl-1">
+                              {` ${order.quantity}`}
+                            </div>
+                          </div>
+                          <div className="flex flex-row gap-x-2">
+                            <FontAwesomeIcon
+                              icon={faEdit}
+                              className="
+                                hover:cursor-pointer hover:text-orange-400
+                              "
+                              onClick={() => {
+                                console.log('edit');
+                                setCustomizing(order);
+                              }}
+                            />
+                            <FontAwesomeIcon
+                              icon={faTrash}
+                              className="hover:cursor-pointer hover:text-red-400"
+                              onClick={() => {
+                                setThisOrders(
+                                  thisOrders.filter((x) => x !== order),
+                                );
+                              }}
+                            />
+                          </div>
                         </div>
                       </div>
-                      <div className="flex flex-row gap-x-2">
-                        <FontAwesomeIcon
-                          icon={faEdit}
-                          className="
-                            hover:cursor-pointer hover:text-orange-400
-                          "
-                        />
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          className="hover:cursor-pointer hover:text-red-400"
-                        />
-                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  ))}
             </div>
           </div>
           <div className="flex flex-row justify-center mt-4">
             <div
-              className="
-                bg-gradient-to-r from-orange-300 to-red-400 p-3 rounded-xl
+              className={
+                `bg-gradient-to-r p-3 rounded-xl
                 drop-shadow-lg hover:cursor-pointer hover:shadow-2xl flex
-                flex-row gap-x-20 
-              "
+                flex-row gap-x-5 md:gap-x-10 ` +
+                (thisOrders.length == 0
+                  ? 'from-gray-300 to-gray-400 text-red-700'
+                  : 'from-orange-300 to-red-400')
+              }
             >
               <FontAwesomeIcon icon={faBasketShopping} className="text-2xl" />
-              <div className="">Proceed</div>
-              <div>{`฿${orders.reduce(
+              <div className="">
+                {thisOrders.length == 0 ? 'No Orders' : `Proceed to Checkout`}
+              </div>
+              <div>{`฿${thisOrders.reduce(
                 (acc, x) =>
                   acc.plus(
                     calculatePrice(
@@ -139,11 +200,20 @@ const BasketPopup = ({ orders, restaurant, onClose }) => {
   );
 };
 
-const OrderPopup = ({ restaurant, menu_id, onClose, onConfirmation }) => {
+const OrderPopup = ({
+  restaurant,
+  menu_id,
+  defaultQuantity,
+  defaultOptions,
+  defaultRequest,
+  onClose,
+  onConfirmation,
+  confirmationText,
+}) => {
   const [ordering, setOrdering] = useState({
-    quantity: 1,
-    options: [],
-    request: '',
+    quantity: defaultQuantity,
+    options: defaultOptions,
+    request: defaultRequest,
   });
 
   const requiredSelected = () =>
@@ -160,7 +230,7 @@ const OrderPopup = ({ restaurant, menu_id, onClose, onConfirmation }) => {
       <div
         className="
           bg-white my-10 rounded-2xl drop-shadow-2xl p-6 flex flex-col 
-          mx-auto md:min-w-[50%]
+          mx-auto min-w-[80%] md:min-w-[70%]
         "
       >
         <FontAwesomeIcon
@@ -344,7 +414,7 @@ const OrderPopup = ({ restaurant, menu_id, onClose, onConfirmation }) => {
                     : null
                 }
               >
-                <div>Add to Basket</div>
+                <div>{confirmationText}</div>
                 <div>{`฿${calculatePrice(
                   restaurant,
                   menu_id,
@@ -429,6 +499,10 @@ const MainPage = ({ restaurant }) => {
               popup: null,
             });
           }}
+          defaultQuantity={1}
+          defaultOptions={[]}
+          defaultRequest=""
+          confirmationText={'Add to Basket'}
         />
       );
     } else if (order.popup.type === 'basket') {
@@ -437,9 +511,10 @@ const MainPage = ({ restaurant }) => {
         <BasketPopup
           orders={order.orders}
           restaurant={restaurant}
-          onClose={() =>
+          onClose={(orders) =>
             setOrder({
               ...order,
+              orders: orders,
               popup: null,
             })
           }

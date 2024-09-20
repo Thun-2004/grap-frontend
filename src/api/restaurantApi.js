@@ -101,7 +101,6 @@ export const getMenuCustomizations = async (menuID) => {
       return null;
     }
 
-    console.log('customizations: ', customizations.data);
     return customizations.data;
   } catch (error) {
     console.log('Error fetching: ', error);
