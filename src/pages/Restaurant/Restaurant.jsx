@@ -82,8 +82,8 @@ const BasketPopup = ({ orders, restaurant, onClose }) => {
             {thisOrders.length == 0 ? (
               <div
                 className="
-                flex flex-row flex-grow text-center justify-center
-              "
+                  flex flex-row flex-grow text-center justify-center
+                "
               >
                 <div className="self-center flex flex-col gap-y-2">
                   <FontAwesomeIcon icon={faShoppingCart} className="text-4xl" />
@@ -116,11 +116,16 @@ const BasketPopup = ({ orders, restaurant, onClose }) => {
                       />
                       <div className="flex flex-row justify-between flex-grow">
                         <div className="flex flex-col px-4 flex-grow">
-                          <div className="text-lg font-semibold">
+                          <div className="text-lg font-semibold line-clamp-1">
                             {restaurant.menus[order.menu_id].name}
                           </div>
                           <hr className="my-1"></hr>
-                          <div className="text-sm font-extralight">
+                          <div
+                            className="
+                              text-sm font-extralight line-clamp-2 
+                              sm:line-clamp-3
+                            "
+                          >
                             {order.request == ''
                               ? 'No Extra Request'
                               : order.request}
@@ -251,6 +256,13 @@ const OrderPopup = ({
               {restaurant.menus[menu_id].name}
             </h1>
             <hr className="my-2" />
+            {restaurant.menus[menu_id].description != null ? (
+              <div>
+                <div className="font-light text-sm mb-4">
+                  {restaurant.menus[menu_id].description}
+                </div>
+              </div>
+            ) : null}
 
             {Object.values(restaurant.menus[menu_id].customizations).map(
               (customization) => (
@@ -273,7 +285,7 @@ const OrderPopup = ({
                   </div>
                   <hr className="my-2" />
                   {customization.description != null ? (
-                    <div className="font-light">
+                    <div className="text-sm font-light">
                       {customization.description}
                     </div>
                   ) : null}
@@ -575,14 +587,17 @@ const MainPage = ({ restaurant }) => {
       </div>
       <div
         className="
-          flex flex-wrap my-10 mx-8 justify-center gap-x-5 gap-y-5
+          flex flex-col my-10 mx-8 justify-center gap-x-5 gap-y-5 md:flex-row
+          md:flex-wrap
         "
       >
         {Object.entries(restaurant.menus).map(([id, menu]) => (
           <div
             className="
-            bg-slate-50 rounded-2xl shadow-xl overflow-hidden 
-            hover:shadow-orange-300 hover:shadow-2xl
+            bg-slate-50 rounded-2xl shadow-xl 
+            hover:shadow-orange-300 hover:shadow-2xl flex flex-row h-48
+              max-h-48 md:flex-col md:h-auto md:max-h-none md:w-64 md:max-w-64
+              overflow-hidden
             "
           >
             <img
@@ -592,18 +607,20 @@ const MainPage = ({ restaurant }) => {
                   : URL.createObjectURL(menu.image)
               }
               className="
-                 object-cover object-center min-w-full min-h-30 md:w-80 md:h-60
-                 drop-shadow-sm
+                aspect-square h-full w-auto p-2 object-cover object-center
+                rounded-xl drop-shadow-sm md:p-0 md:rounded-none
               "
             />
-            <div className="flex justify-between p-4">
-              <div>
-                <div className="text-xl font-semibold">{menu.name}</div>
-                <div className="text-md mt-4">{menu.description}</div>
-                <div className="text-md mt-4">{`฿${menu.price}`}</div>
+            <div className="flex justify-between p-4 grow">
+              <div className="flex flex-col">
+                <div className="text-xl font-semibold line-clamp-1">
+                  {menu.name}
+                </div>
+                <p className="text-md mt-4 line-clamp-1">{menu.description}</p>
+                <div className="text-md mt-4 line-clamp-1">{`฿${menu.price}`}</div>
                 <div className="flex gap-x-2 mt-4">
                   <FontAwesomeIcon className="self-center" icon={faClock} />
-                  <div className="text">
+                  <div className="text line-clamp-1">
                     {menu.estimated_prep_time == null
                       ? 'Not Specified'
                       : `${menu.estimated_prep_time} mins`}
