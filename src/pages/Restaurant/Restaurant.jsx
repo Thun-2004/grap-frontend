@@ -1,5 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Decimal from 'decimal.js';
+import defaultRestaurantImage from '../../assets/defaultRestaurant.jpeg';
+import defaultMenuImage from '../../assets/defaultMenu.webp';
+
 import {
   faPlus,
   faMinus,
@@ -99,9 +102,13 @@ const BasketPopup = ({ orders, restaurant, onClose }) => {
                   "
                     >
                       <img
-                        src={URL.createObjectURL(
-                          restaurant.menus[order.menu_id].image,
-                        )}
+                        src={
+                          restaurant.menus[order.menu_id].image == null
+                            ? defaultMenuImage
+                            : URL.createObjectURL(
+                                restaurant.menus[order.menu_id].image,
+                              )
+                        }
                         className="
                         aspect-square h-24 sm:h-32 object-cover object-
                         center rounded-xl drop-shadow-md self-center
@@ -528,7 +535,11 @@ const MainPage = ({ restaurant }) => {
   return (
     <div className="mx-auto">
       <img
-        src={URL.createObjectURL(restaurant.image)}
+        src={
+          restaurant.image == null
+            ? defaultRestaurantImage
+            : URL.createObjectURL(restaurant.image)
+        }
         className="
             top-0 absolute w-[100%] h-auto max-h-[25vh] object-center 
             object-cover min-h-40 drop-shadow-2xl
@@ -575,7 +586,11 @@ const MainPage = ({ restaurant }) => {
             "
           >
             <img
-              src={URL.createObjectURL(menu.image)}
+              src={
+                menu.image == null
+                  ? defaultMenuImage
+                  : URL.createObjectURL(menu.image)
+              }
               className="
                  object-cover object-center min-w-full min-h-30 md:w-80 md:h-60
                  drop-shadow-sm
@@ -590,7 +605,7 @@ const MainPage = ({ restaurant }) => {
                   <FontAwesomeIcon className="self-center" icon={faClock} />
                   <div className="text">
                     {menu.estimated_prep_time == null
-                      ? 'unknown'
+                      ? 'Not Specified'
                       : `${menu.estimated_prep_time} mins`}
                   </div>
                 </div>
