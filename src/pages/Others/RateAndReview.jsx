@@ -1,21 +1,29 @@
+import React from "react";
 import Comment from "../../components/Comment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faLocationDot, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import CommentWindow from "../../components/CommentWindow";
 
 const RateAndReview = () => {
+    const [addComment, setAddComment] = React.useState(false);
+    //edit this 
+    const handleAddComment = () => {
+        setAddComment(!addComment);
+    }
+
     return (
         <div className="gradient-color-orange overflow-scroll">
             {/* add black gradient */}
-            <div className="fixed top-0 w-full pt-8 text-white text-3xl flex">
-                <FontAwesomeIcon className="m-2 size-8 text-white z-10" icon={faArrowLeft} />
-                <h1 className="mt-1 font-medium z-10">Rate & Review</h1>
+            <div className="fixed top-0 w-full pt-8 text-white text-3xl flex ">
+                <FontAwesomeIcon className="m-1 ml-4 size-8 text-white z-10" icon={faArrowLeft} />
+                <h1 className=" font-medium z-10">Rate & Review</h1>
                 <div className="fixed top-0 h-32 w-full bg-gradient-to-b from-orange-800 to-transparent "></div>
             </div>
 
 
             <div className="h-screen flex flex-col items-center mt-28">
                 
-                <div className="bg-slate-100 w-11/12 h-screen rounded-3xl mb-6">
+                <div className="bg-slate-100 w-8/12 h-screen rounded-3xl mb-6">
                     {/* white box */}
                     <div className="flex flex-col justify-center bg-slate-100 rounded-3xl">
                         {/* header */}
@@ -83,9 +91,15 @@ const RateAndReview = () => {
                             
                         </div>
                         <h1 className="comment-sub-heading-bold-font ml-3 mb-3">Reviews(50)</h1>
-                        <div className="flex flex-col items-center overflow-y-scroll">
+                        <div className="flex flex-col items-center">
                             <Comment username="Arhway" date="15 Sep 2020" menu="Fried Dog" numStar="4" comment="I Love it. So flavourful"/>
                             <Comment username="Arhway" date="15 Sep 2020" menu="Fried Dog" numStar="4" comment="I Love it. So flavourful"/>
+                            <CommentWindow/>
+                        </div>
+                        <div className="fixed bottom-10 right-10">
+                            <button className="add-button" type="submit" onClick={handleAddComment}>
+                                <h2 className="text-3xl">+</h2>
+                            </button>
                         </div>
                         
                     </div>

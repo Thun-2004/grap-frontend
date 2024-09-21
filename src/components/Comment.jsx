@@ -3,11 +3,10 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 
 
-
 const Comment = ({ username, date, menu, numStar, comment }) => {
     return (
        
-            <div className="bg-slate-100 w-3/6 p-2 rounded-3xl mb-6 flex flex-col shadow-xl">
+            <div className="bg-slate-100 w-5/6 p-2 rounded-3xl mb-6 flex flex-col shadow-xl">
             {/* header */}
                 <div className="m-2">
                     <div className="flex">
@@ -39,7 +38,7 @@ const Comment = ({ username, date, menu, numStar, comment }) => {
 
                     <h2 className="mb-3 text-lg text-blue-950">{comment}</h2>
                     {/* //see more if comment is too long */}
-                    <div className=" overflow-hidden rounded-md h-2/4 bg-slate-300 ">
+                    <div className="overflow-hidden rounded-md h-2/4 bg-slate-300 ">
                         {/* foog img */}
                         <img className="object-cover w-full h-36" src="https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?cs=srgb&dl=pexels-ella-olsson-572949-1640772.jpg&fm=jpg" alt="" />
                     </div>
