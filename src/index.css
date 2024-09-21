@@ -14,6 +14,10 @@ body{
   @apply bg-gradient-to-bl from-orange-400 to-pink-500;
 }
 
+.gradient-color-orange {
+  @apply bg-gradient-to-r from-yellow-600 via-orange-600 to-red-600;
+}
+
 .general-button {
   @apply  inline-flex  p-2 px-5 text-white bg-gradient-to-bl hover:from-pink-500 hover:to-orange-600 hover:bg-gradient-to-bl  from-orange-400 to-pink-500 justify-center align-middle text-center rounded-full ;
 }
@@ -54,7 +58,6 @@ body{
 .comment-detail-font{
   @apply text-slate-500 font-bold text-lg
 }
-
 
 
 @media (max-width: 500px){

@@ -4,11 +4,14 @@ import { faStar, faLocationDot, faArrowLeft } from "@fortawesome/free-solid-svg-
 
 const RateAndReview = () => {
     return (
-        <div className="gradient-color overflow-scroll">
-            <div className="fixed top-0 w-full pt-10 text-white text-3xl gradient-color flex">
-                <FontAwesomeIcon className="m-2 size-8 text-white " icon={faArrowLeft} />
-                <h1 className="mt-1 font-medium">Rate & Review</h1>
+        <div className="gradient-color-orange overflow-scroll">
+            {/* add black gradient */}
+            <div className="fixed top-0 w-full pt-8 text-white text-3xl flex">
+                <FontAwesomeIcon className="m-2 size-8 text-white z-10" icon={faArrowLeft} />
+                <h1 className="mt-1 font-medium z-10">Rate & Review</h1>
+                <div className="fixed top-0 h-32 w-full bg-gradient-to-b from-orange-800 to-transparent "></div>
             </div>
+
 
             <div className="h-screen flex flex-col items-center mt-28">
                 
