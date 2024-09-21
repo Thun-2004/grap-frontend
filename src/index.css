@@ -10,6 +10,10 @@ body{
   @apply text-white hover:text-black hover:bg-white rounded-full w-48 text-base px-4 py-2.5 ml-10 mr-5 ;
 }
 
+.gradient-color {
+  @apply bg-gradient-to-bl from-orange-400 to-pink-500;
+}
+
 .general-button {
   @apply  inline-flex  p-2 px-5 text-white bg-gradient-to-bl hover:from-pink-500 hover:to-orange-600 hover:bg-gradient-to-bl  from-orange-400 to-pink-500 justify-center align-middle text-center rounded-full ;
 }
@@ -33,6 +37,25 @@ body{
 .carousel-item-spacing{
   padding-right: 10px; 
 }
+
+/* comment page */
+.comment-heading-font{
+  @apply text-blue-950 font-bold text-2xl
+}
+
+.comment-sub-heading-bold-font{
+  @apply text-blue-950 font-semibold text-lg
+}
+
+.comment-sub-heading-font{
+  @apply text-blue-950 font-normal text-lg
+}
+
+.comment-detail-font{
+  @apply text-slate-500 font-bold text-lg
+}
+
+
 
 @media (max-width: 500px){
   .carousel-item-spacing{
