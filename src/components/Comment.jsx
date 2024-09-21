@@ -23,7 +23,9 @@ const Comment = ({ username, date, menu, numStar, comment }) => {
                         <h1 className="text-blue-950 font-bold text-2xl">{menu}</h1>
                         <div className="">
                             {
+
                                 [
+                                    //potential error : the same key
                                     ...Array(parseInt(numStar)).fill(0).map((_, i) => (
                                         <FontAwesomeIcon icon={faStar} key={i} className="m-1 size-6 text-yellow-500"/>
                                     )),

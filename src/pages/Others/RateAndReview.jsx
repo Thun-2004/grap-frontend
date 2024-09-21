@@ -5,24 +5,22 @@ import { faStar, faLocationDot, faArrowLeft } from "@fortawesome/free-solid-svg-
 import CommentWindow from "../../components/CommentWindow";
 
 const RateAndReview = () => {
-    const [addComment, setAddComment] = React.useState(false);
-    //edit this 
-    const handleAddComment = () => {
-        setAddComment(!addComment);
-    }
-
+    const [showModal, setShowModal] = React.useState(false);
+    const closeModal = () => setShowModal(!showModal);
+    //edit this
     return (
         <div className="gradient-color-orange overflow-scroll">
             {/* add black gradient */}
-            <div className="fixed top-0 w-full pt-8 text-white text-3xl flex ">
-                <FontAwesomeIcon className="m-1 ml-4 size-8 text-white z-10" icon={faArrowLeft} />
-                <h1 className=" font-medium z-10">Rate & Review</h1>
+            <div className="fixed top-0 w-full pt-8 text-white hover:text-blue-950 text-3xl flex ">
+                <button className="flex" type="button" >
+                    <FontAwesomeIcon className="m-1 ml-4 size-8 z-10" icon={faArrowLeft} />
+                    <h1 className="font-medium z-10 ">Rate & Review</h1>
+                </button>
+                
                 <div className="fixed top-0 h-32 w-full bg-gradient-to-b from-orange-800 to-transparent "></div>
             </div>
 
-
             <div className="h-screen flex flex-col items-center mt-28">
-                
                 <div className="bg-slate-100 w-8/12 h-screen rounded-3xl mb-6">
                     {/* white box */}
                     <div className="flex flex-col justify-center bg-slate-100 rounded-3xl">
@@ -48,45 +46,7 @@ const RateAndReview = () => {
                                         ]
                                     }
                                 </div>
-                                {/* <h1 className="comment-sub-heading-font">Flavour</h1>
-                                <div className="">
-                                    {
-                                        [
-                                            ...Array(3).fill(0).map((_, i) => (
-                                                <FontAwesomeIcon icon={faStar} key={i} className="m-1 size-5 text-yellow-500"/>
-                                            )),
-                                            ...Array(2).fill(0).map((_, i) => (
-                                                <FontAwesomeIcon icon={faStar} key={i} className="m-1 size-5"/>
-                                            ))
-                                        ]
-                                    }
-                                </div>
-                                <h1 className="comment-sub-heading-font">Hygiene</h1>
-                                <div className="">
-                                    {
-                                        [
-                                            ...Array(3).fill(0).map((_, i) => (
-                                                <FontAwesomeIcon icon={faStar} key={i} className="m-1 size-5 text-yellow-500"/>
-                                            )),
-                                            ...Array(2).fill(0).map((_, i) => (
-                                                <FontAwesomeIcon icon={faStar} key={i} className="m-1 size-5"/>
-                                            ))
-                                        ]
-                                    }
-                                </div>
-                                <h1 className="comment-sub-heading-font">Fast Delivery</h1>
-                                <div className="">
-                                    {
-                                        [
-                                            ...Array(3).fill(0).map((_, i) => (
-                                                <FontAwesomeIcon icon={faStar} key={i} className="m-1 size-5 text-yellow-500"/>
-                                            )),
-                                            ...Array(2).fill(0).map((_, i) => (
-                                                <FontAwesomeIcon icon={faStar} key={i} className="m-1 size-5"/>
-                                            ))
-                                        ]
-                                    }
-                                </div> */}
+                                
                             </div>
                             
                         </div>
@@ -94,10 +54,9 @@ const RateAndReview = () => {
                         <div className="flex flex-col items-center">
                             <Comment username="Arhway" date="15 Sep 2020" menu="Fried Dog" numStar="4" comment="I Love it. So flavourful"/>
                             <Comment username="Arhway" date="15 Sep 2020" menu="Fried Dog" numStar="4" comment="I Love it. So flavourful"/>
-                            <CommentWindow/>
                         </div>
                         <div className="fixed bottom-10 right-10">
-                            <button className="add-button" type="submit" onClick={handleAddComment}>
+                            <button className="add-button" type="submit" onClick={() => setShowModal(true)}>
                                 <h2 className="text-3xl">+</h2>
                             </button>
                         </div>
@@ -106,7 +65,15 @@ const RateAndReview = () => {
                 </div>
                 
             </div>
+            {showModal ? 
+                <div>
+                    <CommentWindow closeModal={closeModal}/>
+                    <div className="fixed top-0 left-0 bg-black opacity-50 w-screen h-screen"></div>
+                </div>   
+            : null}
         </div>
+        
+        
         
     );
 }
