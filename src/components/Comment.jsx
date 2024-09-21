@@ -25,10 +25,10 @@ const Comment = ({ username, date, menu, numStar, comment }) => {
                         {
                             [
                                 ...Array(parseInt(numStar)).fill(0).map((_, i) => (
-                                    <FontAwesomeIcon icon={faStar} key={i} className="m-1 size-8 text-yellow-500"/>
+                                    <FontAwesomeIcon icon={faStar} key={i} className="m-1 size-6 text-yellow-500"/>
                                 )),
                                 ...Array(5-parseInt(numStar)).fill(0).map((_, i) => (
-                                    <FontAwesomeIcon icon={faStar} key={i} className="m-1 size-8"/>
+                                    <FontAwesomeIcon icon={faStar} key={i} className="m-1 size-6"/>
                                 ))
                             ]
                         }
