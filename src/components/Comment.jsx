@@ -6,7 +6,7 @@ import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 const Comment = ({ username, date, menu, numStar, comment }) => {
     return (
        
-            <div className="bg-slate-100 w-5/6 p-2 rounded-3xl mb-6 flex flex-col shadow-xl">
+            <div className="bg-slate-100 w-5/6 p-2 rounded-3xl mb-6 ml-7 flex flex-col shadow-xl">
             {/* header */}
                 <div className="m-2">
                     <div className="flex">

@@ -5,8 +5,8 @@ import RateAndReview from './pages/Others/RateAndReview'
 const App = () => {
   return (
     <>
-      {/* <DashBoard></DashBoard> */}
-      <RateAndReview></RateAndReview>
+      <DashBoard></DashBoard>
+      {/* <RateAndReview></RateAndReview> */}
     </>
   )
 }

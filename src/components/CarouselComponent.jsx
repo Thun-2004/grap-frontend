@@ -53,7 +53,6 @@ const CarouselComponent = () => {
                 {item.map(it => (
                     // <CanteenCard key={it.id} canteenName={it.name} img={it.img}/>
                     <CanteenCard key={it.id} canteenName={it.name}/>
-
                 ))}
             </Carousel>
     );

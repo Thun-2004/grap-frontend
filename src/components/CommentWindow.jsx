@@ -10,7 +10,7 @@ const CommentWindow = ({closeModal}) => {
 
     return (
         <div className='fixed top-40 left-1/4 w-3/6 max-w-3/5 min-w-2/5 p-2 z-10'>
-            <div className="bg-slate-100 p-2 rounded-3xl mb-6 flex flex-col shadow-xl">
+            <div className="bg-slate-100 p-2 rounded-3xl flex flex-col shadow-xl">
                     <div className="m-3">
                     <div className="flex justify-between">
                         <h1 className='comment-heading-font'>Rate and Review your order</h1>
