@@ -110,7 +110,7 @@ const BasketPopup = ({ orders, restaurant, onClose }) => {
                               )
                         }
                         className="
-                        aspect-square h-24 sm:h-32 object-cover object-
+                        aspect-square h-24 object-cover object-
                         center rounded-xl drop-shadow-md self-center
                       "
                       />
@@ -263,6 +263,15 @@ const OrderPopup = ({
                 </div>
               </div>
             ) : null}
+            {restaurant.menus[menu_id].estimated_prep_time == null ? null : (
+              <div className="flex flex-row items-center mb-4">
+                <FontAwesomeIcon icon={faClock} className="mr-2" />
+                <div className="text-sm font-light">
+                  Estaimted Duratoin:{' '}
+                  {`${restaurant.menus[menu_id].estimated_prep_time} mins`}
+                </div>
+              </div>
+            )}
 
             {Object.values(restaurant.menus[menu_id].customizations).map(
               (customization) => (
@@ -305,6 +314,7 @@ const OrderPopup = ({
                           <div className="flex flex-row space-x-2">
                             <input
                               type="checkbox"
+                              className="self-center"
                               checked={ordering.options.includes(option.id)}
                               onChange={(e) => {
                                 if (e.target.checked) {
@@ -525,7 +535,6 @@ const MainPage = ({ restaurant }) => {
         />
       );
     } else if (order.popup.type === 'basket') {
-      console.log('rendering basket');
       return (
         <BasketPopup
           orders={order.orders}
@@ -569,16 +578,16 @@ const MainPage = ({ restaurant }) => {
         </div>
         <hr></hr>
         <div>
-          <div className="flex justify-between py-1">
-            <div className="text-red-00">Busy</div>
+          <div className="flex justify-between">
+            <div className="text-red-800 text-sm p-1">Busy</div>
           </div>
           <hr></hr>
-          <div className="flex justify-between py-1">
-            <div className="mr-2">Current Queue</div>
+          <div className="flex justify-between text-sm p-1">
+            <div>Current Queue</div>
             <div>32</div>
           </div>
           <hr></hr>
-          <div className="flex justify-between py-1">
+          <div className="flex justify-between text-sm p-1">
             <div>Rating and Review</div>
             <div>4.7/5.0</div>
           </div>
@@ -587,17 +596,16 @@ const MainPage = ({ restaurant }) => {
       </div>
       <div
         className="
-          flex flex-col my-10 mx-8 justify-center gap-x-5 gap-y-5 md:flex-row
+          flex flex-col my-8 mx-4 justify-center gap-x-2 gap-y-2 md:flex-row
           md:flex-wrap
         "
       >
         {Object.entries(restaurant.menus).map(([id, menu]) => (
           <div
             className="
-            bg-slate-50 rounded-2xl shadow-xl 
-            hover:shadow-orange-300 hover:shadow-2xl flex flex-row h-48
-              max-h-48 md:flex-col md:h-auto md:max-h-none md:w-64 md:max-w-64
-              overflow-hidden
+            bg-slate-50 rounded-2xl shadow-lg hover:shadow-xl flex 
+              flex-row h-32 max-h-32 md:flex-col md:h-auto md:max-h-none 
+              md:w-64 md:max-w-64 overflow-hidden
             "
           >
             <img
@@ -611,16 +619,21 @@ const MainPage = ({ restaurant }) => {
                 rounded-xl drop-shadow-sm md:p-0 md:rounded-none
               "
             />
-            <div className="flex justify-between p-4 grow">
+            <div className="flex justify-between p-2 grow">
               <div className="flex flex-col">
-                <div className="text-xl font-semibold line-clamp-1">
+                <div className="text-lg font-semibold line-clamp-1">
                   {menu.name}
                 </div>
-                <p className="text-md mt-4 line-clamp-1">{menu.description}</p>
-                <div className="text-md mt-4 line-clamp-1">{`฿${menu.price}`}</div>
-                <div className="flex gap-x-2 mt-4">
-                  <FontAwesomeIcon className="self-center" icon={faClock} />
-                  <div className="text line-clamp-1">
+                <div className="text-sm mt-4 line-clamp-1">
+                  {menu.description}
+                </div>
+                <div className="text-sm mt-4 line-clamp-1">{`฿${menu.price}`}</div>
+                <div className="gap-x-2 mt-4 hidden md:flex">
+                  <FontAwesomeIcon
+                    className="text-sm self-center"
+                    icon={faClock}
+                  />
+                  <div className="text-sm line-clamp-1">
                     {menu.estimated_prep_time == null
                       ? 'Not Specified'
                       : `${menu.estimated_prep_time} mins`}
@@ -629,8 +642,9 @@ const MainPage = ({ restaurant }) => {
               </div>
               <FontAwesomeIcon
                 className="
-                  rounded-full bg-green-400 p-3 shadow-sm self-end 
+                  rounded-full bg-green-400 p-2 shadow-sm self-end text-sm
                   hover:cursor-pointer  hover:shadow-lg hover:bg-green-500
+                  mb-1
                 "
                 icon={faPlus}
                 onClick={async () => {
