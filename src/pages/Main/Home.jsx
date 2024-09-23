@@ -2,23 +2,37 @@
 import CanteenCard from '../../components/CanteenCard';
 import RestaurantCard from '../../components/RestaurantCard';
 import CarouselComponent from '../../components/CarouselComponent';
+import Banner from '../../components/Banner';
+import QueueCard from '../../components/QueueCard';
+import React from 'react';
 
 const Home = () => {
     return (
-        <div className="p-7">
-            <div className="">
-                {/* for q */}
+        <div className="p-7 flex">
+            <div className="flex flex-col w-10/12">
+                <div className="">
+                    {/* for q */}
+                    <Banner/>
+                </div>
+                <div className="">
+                    <h1 className='title mt-10'>Nearby Canteen</h1>
+                    <CarouselComponent/>
+                </div>
+                <div className="">
+                    <div className="">
+                        <h1 className='title'>Food from your nearest: Canteen A</h1>
+                    </div>  
+                    <RestaurantCard/>
+                    <RestaurantCard/>
+                </div>
             </div>
-            <div className="">
-                <h1 className='title'>Nearby Canteen</h1>
-                <CarouselComponent/>
+            <div className="w-full">
+                <h1 className='title mb-5'>My Queue(1)</h1>
+                <div className="flex flex-col">
+                    <QueueCard/>
+                    <QueueCard/>
+                </div>
             </div>
-            <div className="">
-                <h1 className='title'>Food from your nearest: Canteen A</h1>
-                <RestaurantCard/>
-                <RestaurantCard/>
-            </div>
-            
         </div>
     )
 }

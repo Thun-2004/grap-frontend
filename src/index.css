@@ -6,6 +6,11 @@
 body{
   min-width: 693px;
 }
+
+.general-card{
+  @apply rounded-3xl shadow-xl p-4;
+}
+
 .sidebar-button {
   @apply text-white hover:text-black hover:bg-white rounded-xl w-10 text-center px-2.5 py-2.5 ml-8 ;
 }
