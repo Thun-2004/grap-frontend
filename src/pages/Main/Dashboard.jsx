@@ -20,6 +20,10 @@ const Dashboard = () => {
                     <Home/>
                     {/* <PurchaseHistory/> */}
                     {/* <MyProfile/> */}
+                    
+                </div>
+                <div className="absolute top-7 right-0 left-0 md:left-40 sm:left-0">
+                    {/* <PurchaseHistory/> */}
                 </div>
             </div>
         </div>
