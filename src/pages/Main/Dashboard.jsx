@@ -13,12 +13,12 @@ const Dashboard = () => {
                 <SideBar/>
             </div>
             <div className="flex-grow flex flex-col">
-                <div className="fixed top-0 right-0 left-0 z-10 md:left-40 sm:left-0 ">
+                <div className="fixed top-0 right-0 left-0 z-10 md:left-36 sm:left-0 ">
                     <Header/>
                 </div>
                 <div className="absolute top-32 right-0 left-0 md:left-40 sm:left-0">
-                    <Home/>
-                    {/* <PurchaseHistory/> */}
+                    {/* <Home/> */}
+                    <PurchaseHistory/>
                     {/* <MyProfile/> */}
                 </div>
             </div>

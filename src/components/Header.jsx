@@ -32,7 +32,7 @@ const Header = () => {
     }
 
     return (
-        <div className="bg-slate-100 w-full shadow-lg left-0">
+        <div className="bg-white w-full left-0 shadow-md">
             <div className="flex space-x-32 items-center">
                 {/* <button onClick={handleShowModel}> */}
                 <div className="md:ml-10">
@@ -59,8 +59,9 @@ const Header = () => {
                     </div>
                     
                 </div>
-                <div className="">
-                    userprofile
+                <div className="flex mt-9">
+                    <img src="" className="w-12 h-12 rounded-full bg-slate-500" alt="" />
+                    <h1 className='title ml-3 mt-3'>Arhway</h1>
                 </div>
                 {/* <div className="mt-14 mr-8">
                     <FontAwesomeIcon className="size-7" icon={faShoppingCart}/>
@@ -70,7 +71,7 @@ const Header = () => {
                 </div> */}
             </div>
             {focus && !closeTag ? 
-                <div className="flex flex-col ml-16 pb-3">
+                <div className="flex flex-col ml-96 pb-3">
                     <button type="button" onClick={handleCloseTag}>
                         <FontAwesomeIcon className="absolute right-7 size-6" icon={faCircleXmark} />
                     </button>
@@ -82,8 +83,8 @@ const Header = () => {
                         <Tag name="Canteen4"/>
                         <Tag name="Canteen5"/>
                     </div> */}
-                    <h1>Recent & Popular food</h1>
-                    <div className="flex justify-start space-x-6 mt-3">
+                    <h1 className='ml-20'>Recent & Popular food</h1>
+                    <div className="flex justify-start space-x-6 mt-3 ml-20">
                         {
                             //global state : user's prev order
                             ['Krapao', 'Burger', 'Padthai', 'Japanese food', 'Dog'].map((foodName) => (

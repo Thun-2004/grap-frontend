@@ -33,14 +33,14 @@ const SideBar = () => {
         //     </div>
             
         // </div>
-        <div className="fixed left-12 md:w-28 w-0 h-screen py-4">
+        <div className="fixed left-8 md:w-28 w-0 h-screen py-4">
             {/* <NavLink to="/">Home</NavLink>
             from-pink-500 to-orange-400
             bg-gradient-to-b from-[#FC7413] to-[#A71818]
             <NavLink to="/history">History</NavLink> */}
             <div className='bg-gradient-to-b from-[#FC7413] to-[#A71818] h-full w-full rounded-xl justify-center text-center flex flex-col z-20'>
                 <div className="lg:block md:block hidden">
-                    <div className="flex flex-col space-y-48 ">
+                    <div className="flex flex-col space-y-56 md:space-y-44 ">
                         <FontAwesomeIcon className="text-5xl text-white" icon={faUtensils} />
                         <div className="flex flex-col align-middle space-y-7">
                             <button type="button" className="sidebar-button"><FontAwesomeIcon icon={faHouse} className="sidebar-icon"/></button>

@@ -15,19 +15,19 @@ const Home = () => {
                     <Banner/>
                 </div>
                 <div className="">
-                    <h1 className='title mt-10'>Nearby Canteen</h1>
+                    <h1 className='heading-font mt-10'>Nearby Canteen</h1>
                     <CarouselComponent/>
                 </div>
                 <div className="">
                     <div className="">
-                        <h1 className='title'>Food from your nearest: Canteen A</h1>
+                        <h1 className='heading-font'>Food from your nearest: Canteen A</h1>
                     </div>  
                     <RestaurantCard/>
                     <RestaurantCard/>
                 </div>
             </div>
             <div className="w-full">
-                <h1 className='title mb-5'>My Queue(1)</h1>
+                <h1 className='heading-font mb-5'>My Queue(1)</h1>
                 <div className="flex flex-col">
                     <QueueCard/>
                     <QueueCard/>
