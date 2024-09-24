@@ -3,7 +3,7 @@ import SideBar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import Home from "./Home";
 import PurchaseHistory from "./PurchaseHistory";
-// import MyProfile from "./MyProfile";
+import MyProfile from "./MyProfile";
 
 //sidebar, header, link to other pages
 const Dashboard = () => {
@@ -17,13 +17,13 @@ const Dashboard = () => {
                     <Header/>
                 </div> */}
                 <div className="absolute top-32 right-0 left-0 md:left-40 sm:left-0">
-                    <Home/>
+                    {/* <Home/> */}
                     {/* <PurchaseHistory/> */}
-                    {/* <MyProfile/> */}
                     
                 </div>
-                <div className="absolute top-7 right-0 left-0 md:left-40 sm:left-0">
+                <div className="absolute top-7 right-0 left-3 md:left-40 sm:left-0">
                     {/* <PurchaseHistory/> */}
+                    <MyProfile/>
                 </div>
             </div>
         </div>
