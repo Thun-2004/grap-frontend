@@ -40,6 +40,10 @@ body{
   @apply size-6 mr-3 ; 
 }
 
+.big-title {
+  @apply text-3xl font-bold text-black;
+}
+
 .title {
   @apply text-xl font-bold text-black;
 }

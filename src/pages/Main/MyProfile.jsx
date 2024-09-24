@@ -1,7 +1,7 @@
 import React from 'react';
 import PurchaseCard from '../../components/PurchaseCard';
 import ProfileHeader from '../../components/ProfileHeader';
-import ReviewBody from '../../components/ProfileBody';
+import ReviewBody from '../../components/ReviewBody';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClockRotateLeft, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,11 +9,14 @@ const MyProfile = () => {
     const menulist = ['Profile Overview', 'Reviews', 'Photos', 'Notification','Security'];
     //try call api and manage 
     return (
-        <div className="p-8 ml-10 mr-20 h-screen bg-slate-100">
-            <ProfileHeader/>
-            <div className="flex mt-5">
-                <div className="w-1/4 p-2 flex flex-col bg-slate-100 border-2 border-slate-400 rounded-xl">
-                    <div className="m-3">
+        <div className="p-8 ml-10 mr-20 h-screen">
+            <div className="fixed top-5 left-16 w-screen h-64 px-24">
+                <ProfileHeader/>
+            </div>
+            
+            <div className="relative top-80 flex mt-5">
+                <div className="fixed top-80 left-44 w-1/4 p-2 h-80 flex flex-col bg-white border-2 border-slate-400 border-opacity-50 rounded-xl">
+                    <div className="m-3 title">
                         ACTIVITY
                     </div>
                     {
@@ -26,7 +29,7 @@ const MyProfile = () => {
                         })
                     }
                 </div>
-                <div className="flex-1 flex flex-col bg-slate-400">
+                <div className="absolute left-80 w-3/4 h-full flex-1 flex flex-col ml-10 rounded-2xl">
                     <ReviewBody/>
                 </div>
             </div>
