@@ -9,6 +9,7 @@ const ReviewBody = () => {
             <div className="flex flex-col justify-center items-center">
                 <Comment username="Arhway" date="11 Sep 2024" menu="Fried dog" numStar="5" comment="Yum Yum"/>
                 <Comment username="Arhway" date="11 Sep 2024" menu="Meow Meow" numStar="3" comment="I prefer fried dog"/>
+                <Comment username="Arhway" date="11 Sep 2024" menu="Meow Meow" numStar="3" comment="I prefer fried dog"/>
 
             </div>
         </div>

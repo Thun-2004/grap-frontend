@@ -3,6 +3,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 const ProfileHeader = () => {
     return (
+        <div className='fixed top-5 left-16 w-screen h-64 px-24 z-20'>
         <div className="relative w-full h-64 rounded-3xl bg-slate-400">
             <div className="w-full h-full bg-orange-500 rounded-3xl">
                 {/* <h1 className='text-3xl align-middle'>QuickDish</h1> */}
@@ -35,6 +36,7 @@ const ProfileHeader = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
             
     ); 

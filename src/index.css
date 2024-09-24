@@ -97,8 +97,23 @@ body{
   @apply bg-slate-100 w-5/6 p-2 rounded-3xl mb-6 flex flex-col shadow-xl
 }
 
-/* shadow */
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
 
+::-webkit-scrollbar-track {
+  background: #dbdbdb;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #F97316; /* Scrollbar thumb color */
+  border-radius: 10px;    /* Round corners of scrollbar */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #F97316;  /* Color on hover */
+}
 
 @media (max-width: 500px){
   .carousel-item-spacing{
@@ -111,5 +126,7 @@ body{
     padding-right: 10px; 
   }
 }
+
+
 
 
