@@ -54,11 +54,11 @@ const SideBar = () => {
                 </div>
                 
                 <div className="lg:hidden md:hidden fixed bottom-0 right-0 w-full bg-gradient-to-b from-[#FC7413] to-[#A71818] h-16 flex justify-around items-center">
-                    <button type="button" className="sidebar-button"><FontAwesomeIcon icon={faHouse} className="bottom-bar-icon"/>Home</button>
-                    <button type="button" className="sidebar-button"><FontAwesomeIcon icon={faBookmark} className="bottom-bar-icon"/>Favourite</button>
-                    <button type="button" className="sidebar-button"><FontAwesomeIcon icon={faComment} className="bottom-bar-icon"/>Notification</button>
-                    <button type="button" className="sidebar-button"><FontAwesomeIcon icon={faClockRotateLeft} className="bottom-bar-icon"/>History</button>
-                    <button type="button" className="sidebar-button"><FontAwesomeIcon icon={faUser} className="bottom-bar-icon"/>Profile</button>
+                    <button type="button" className="sidebar-button text-2xl"><FontAwesomeIcon icon={faHouse} className="bottom-bar-icon"/></button>
+                    <button type="button" className="sidebar-button text-2xl"><FontAwesomeIcon icon={faBookmark} className="bottom-bar-icon"/></button>
+                    <button type="button" className="sidebar-button text-2xl"><FontAwesomeIcon icon={faComment} className="bottom-bar-icon"/></button>
+                    <button type="button" className="sidebar-button text-2xl"><FontAwesomeIcon icon={faClockRotateLeft} className="bottom-bar-icon"/></button>
+                    <button type="button" className="sidebar-button text-2xl"><FontAwesomeIcon icon={faUser} className="bottom-bar-icon"/></button>
                 </div>
             </div>
             

@@ -9,7 +9,7 @@ import MyProfile from "./MyProfile";
 const Dashboard = () => {
     return (
         <div className="flex">
-            <div className="relative">
+            <div className="relative z-20">
                 <SideBar/>
             </div>
             <div className="flex-grow flex flex-col">
