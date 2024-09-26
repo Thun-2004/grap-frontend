@@ -97,6 +97,16 @@ body{
   @apply bg-slate-100 w-5/6 p-2 rounded-3xl mb-6 flex flex-col shadow-xl
 }
 
+/* profile overview */
+.profile-heading-font{
+  @apply text-lg font-bold text-gray-900
+}
+
+.profile-text-box{
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-100 dark:border-slate-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500
+}
+
+
 /* scrollbar */
 ::-webkit-scrollbar {
   width: 12px;
