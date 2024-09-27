@@ -13,7 +13,7 @@ const PurchaseHistory = () => {
         <div className="p-7">
             <div className="flex">
                 <FontAwesomeIcon className="sidebar-icon" icon={faClockRotateLeft} />
-                <h1 className="heading-font" >Purchase History</h1>
+                <h1 className="big-title" >Purchase History</h1>
             </div>
 
             <div className="flex flex-col mt-12">

@@ -12,7 +12,7 @@ body{
 }
 
 .sidebar-button {
-  @apply text-white hover:text-black hover:bg-white rounded-xl w-10 text-center px-2.5 py-2.5 ml-8 ;
+  @apply text-white hover:text-black hover:bg-white rounded-xl w-10 text-center px-2.5 py-2.5 ;
 }
 
 .gradient-color {
@@ -35,10 +35,16 @@ body{
   @apply  inline-flex p-3 px-5 text-orange-500 bg-white hover:bg-slate-100 justify-center align-middle text-center rounded-full ;
 }
 
-
+/* sidebar */
 .sidebar-icon {
   @apply size-6 mr-3 ; 
 }
+
+.nav-link{
+  @apply mr-20; 
+  
+}
+
 
 .big-title {
   @apply text-3xl font-bold text-black;
@@ -121,9 +127,6 @@ body{
     grid-template-columns: 1fr 1fr;
   }
 }
-
-
-
 
 /* scrollbar */
 ::-webkit-scrollbar {
