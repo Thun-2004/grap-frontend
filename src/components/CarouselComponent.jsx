@@ -19,7 +19,10 @@ const CarouselComponent = () => {
     }, []);  //empty arry = run once on mount
 
     if (canteens == null){
-        return <div> Loading... </div>;
+        return (
+            <div className="w-screen h-screen"> 
+                Loading... 
+            </div>);
     }
 
     const item = canteens.map(canteen => ({

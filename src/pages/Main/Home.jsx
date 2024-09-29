@@ -15,15 +15,25 @@ const Home = () => {
                 <Header/>
             </div>
 
-            <div className="flex flex-col w-10/12">
+            <div className="flex flex-col w-screen lg:w-10/12 pr-2">
                 <div className="w-full mr-10 pr-10">
                     {/* for q */}
                     <CarouselAutomate/>
                 </div>
+
+                <div className="w-full mt-8 block lg:hidden">
+                    <h1 className='heading-font mb-5'>My Queue(1)</h1>
+                    <div className="flex">
+                        <QueueCard/>
+                        <QueueCard/>
+                    </div>
+                </div>
+
                 <div className="">
                     <h1 className='heading-font mt-10'>Nearby Canteen</h1>
                     <CarouselComponent/>
                 </div>
+                
                 <div className="">
                     <div className="">
                         <h1 className='heading-font'>Food from your nearest: Canteen A</h1>
@@ -32,7 +42,7 @@ const Home = () => {
                     <RestaurantCard/>
                 </div>
             </div>
-            <div className="w-full">
+            <div className="w-0 lg:w-full hidden lg:block">
                 <h1 className='heading-font mb-5'>My Queue(1)</h1>
                 <div className="flex flex-col">
                     <QueueCard/>

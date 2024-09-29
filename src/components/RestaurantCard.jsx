@@ -10,15 +10,15 @@ const RestaurantCard = ( {storeName, food, img, canteenName, busyness, queue, ra
     }
 
     return (
-        <div className="bg-white border-2 w-4/5 h-52 mt-3 mb-6 ml-10 rounded-xl shadow-md hover:shadow-lg relative sm:w-5/6">
+        <div className="bg-white border-2 w-4/5 h-60 mt-3 mb-6 ml-10 rounded-xl shadow-md hover:shadow-lg relative sm:w-5/6">
             <div className="flex p-3 h-full">
-                <div className="w-56 bg-slate-100">
+                <div className=" bg-slate-100">
                     {/* <img src={ img } alt="" /> */}
                     <img className ="h-full rounded-xl"src="https://i0.wp.com/tokyotreatblog.wpcomstaging.com/wp-content/uploads/2022/05/Shutterstock_751789537-min.jpg?fit=4096%2C2731&ssl=1" alt="" />
                 </div>
-                <div className="flex flex-col ml-4">
+                <div className="flex flex-col ml-6">
                     <h2 className="title">Restaurant</h2>
-                    <div className="space-y-1 mt-2">
+                    <div className="space-y-2 mt-4">
                         <h2 className="card-info">Status</h2>
                         <h2 className="card-info">Current Queue</h2>
                         <h2 className="card-info">Rating and Review</h2>
@@ -26,8 +26,8 @@ const RestaurantCard = ( {storeName, food, img, canteenName, busyness, queue, ra
                         
                         {/* needed: fetch from db */}
                         <div className="flex">
-                            <IdleTag name="Thai" width="20" height="2"/>
-                            <IdleTag name="CanteenA" width="20" height="2"/>
+                            <IdleTag name="Thai"/>
+                            <IdleTag name="CanteenA"/>
                         </div>
                     </div>
                 </div>
