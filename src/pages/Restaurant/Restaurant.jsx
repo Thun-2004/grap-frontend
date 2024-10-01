@@ -355,7 +355,8 @@ const OrderPopup = ({
                               </h1>
                             </div>
                           </div>
-                          {option.extra_price != null ? (
+                          {option.extra_price != null &&
+                          parseFloat(option.extra_price) > 0 ? (
                             <div className="font-light text-sm">
                               {`+${new Decimal(option.extra_price)}`}
                             </div>
@@ -690,10 +691,11 @@ const MainPage = ({ restaurantData }) => {
           ([/** @type {number} */ id, menu]) => (
             <div
               className="
-            bg-slate-50 rounded-2xl shadow-lg hover:shadow-xl flex 
-              flex-row h-32 max-h-32 md:flex-col md:h-auto md:max-h-none 
-              md:w-64 md:max-w-64 overflow-hidden
-            "
+              bg-slate-50 rounded-2xl shadow-lg hover:shadow-xl flex 
+                flex-row h-32 max-h-32 md:flex-col md:h-auto md:max-h-none 
+                md:w-64 md:max-w-64 overflow-hidden
+              "
+              key={id}
             >
               <img
                 src={
@@ -802,18 +804,18 @@ const MainPage = ({ restaurantData }) => {
  * @returns {ReactNode}
  */
 const Restaurant = () => {
-  // const { restaurantID: restaurantIDString } = useParams();
+  const { restaurantID: restaurantIDString } = useParams();
 
-  // if (restaurantIDString == null) {
-  //   throw new Error("Restaurant ID is not provided");
-  // }
+  if (restaurantIDString == null) {
+    throw new Error("Restaurant ID is not provided");
+  }
 
   const [restaurant, setRestaurant] = useState(
     /** @type {RestaurantData | undefined}*/
     (undefined)
   );
 
-  const restaurantID = 8;
+  const restaurantID = parseInt(restaurantIDString);
 
   useEffect(() => {
     const getData = async () => {
