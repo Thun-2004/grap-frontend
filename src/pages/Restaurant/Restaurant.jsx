@@ -1,6 +1,6 @@
 // @ts-check
 
-import React from "react";
+import React, { useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Decimal from "decimal.js";
 
@@ -515,11 +515,11 @@ const MainPage = ({ restaurantData }) => {
     popup: /** @type {Popup | null} */ (null),
   });
 
-  const [cookie, setCookie, removeCookie] =
+  const [cookie, setCookie, _] =
     /** @type {ReturnType<typeof useCookies<"order", {[K in "order"]?: OrderCreate}>>} */
     (useCookies(["order"]));
 
-  useEffect(() => {
+  useMemo(() => {
     if (
       cookie.order == null ||
       cookie.order.restaurant_id != restaurantData.restaurant.id
@@ -532,7 +532,7 @@ const MainPage = ({ restaurantData }) => {
         })
       );
     }
-  });
+  }, []);
 
   if (cookie.order == null) {
     throw new Error("Cookie is null");
@@ -802,18 +802,18 @@ const MainPage = ({ restaurantData }) => {
  * @returns {ReactNode}
  */
 const Restaurant = () => {
-  const { restaurantID: restaurantIDString } = useParams();
+  // const { restaurantID: restaurantIDString } = useParams();
 
-  if (restaurantIDString == null) {
-    throw new Error("Restaurant ID is not provided");
-  }
+  // if (restaurantIDString == null) {
+  //   throw new Error("Restaurant ID is not provided");
+  // }
 
   const [restaurant, setRestaurant] = useState(
     /** @type {RestaurantData | undefined}*/
     (undefined)
   );
 
-  const restaurantID = parseInt(restaurantIDString);
+  const restaurantID = 8;
 
   useEffect(() => {
     const getData = async () => {
