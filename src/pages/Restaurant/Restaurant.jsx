@@ -17,7 +17,7 @@ import defaultMenuImage from "../../assets/defaultMenu.webp";
  *  Option
  * } from "../../types/restaurant";
  *
- * @import { OrderCreate, OrderItem, OrderOption } from "../../types/order"
+ * @import { OrderCreate, OrderItem, OrderOption, Queue } from "../../types/order"
  *
  * @import { ReactNode } from "react"
  */
@@ -30,6 +30,8 @@ import {
   faLocationDot,
   faClose,
   faShoppingCart,
+  faSort,
+  faMoneyBill,
 } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import {
@@ -40,35 +42,26 @@ import {
   getMenuCustomizations,
 } from "../../api/restaurantApi";
 import { LoadingPage } from "../../components/LoadingPage";
+import ErrorPage from "../Others/Error";
 import OrderCard from "../../components/OrderCard";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { getRestaurantQueue } from "../../api/orderApi";
 
 /**
  * @param {{
+ *  queue: Queue,
  *  orders: OrderItem[],
  *  restaurantData: RestaurantData,
  *  onClose: (orders: OrderItem[]) => void
  * }} prop
  * @returns {ReactNode}
  */
-const BasketPopup = ({ orders, restaurantData, onClose }) => {
+const BasketPopup = ({ queue, orders, restaurantData, onClose }) => {
   const [thisOrders, setThisOrders] = useState([...orders]);
   const [customizing, setCustomizing] = useState(
     /** @type {OrderItem | null} */ (null)
   );
-
-  /**
-   * @param {number} menu_id
-   * @returns {string}
-   */
-  const pickMenuImage = (menu_id) => {
-    if (restaurantData.menus[menu_id].image == null) {
-      return defaultMenuImage;
-    }
-
-    return URL.createObjectURL(restaurantData.menus[menu_id].image);
-  };
 
   return customizing != null ? (
     <OrderPopup
@@ -102,85 +95,150 @@ const BasketPopup = ({ orders, restaurantData, onClose }) => {
     >
       <div
         className="
-          bg-white my-10 rounded-2xl drop-shadow-2xl p-6 flex flex-col 
-          mx-auto min-w-[80%] md:min-w-[70%]
+          bg-white rounded-2xl drop-shadow-2xl flex flex-col
+          mx-auto min-w-[80%] md:min-w-[70%] w-[80%] h-[90%] my-auto
+          md:flex-row overflow-hidden
         "
       >
-        <FontAwesomeIcon
-          icon={faClose}
-          className="absolute self-end hover:cursor-pointer z-10"
-          onClick={() => {
-            onClose(thisOrders);
-          }}
-        />
+        <div
+          className="
+            flex flex-col ml-6 mr-6 mt-6 grow
+          "
+        >
+          <FontAwesomeIcon
+            icon={faClose}
+            className="absolute self-end hover:cursor-pointer z-10"
+            onClick={() => {
+              onClose(thisOrders);
+            }}
+          />
+          <h1 className="text-2xl font-semibold">Basket</h1>
+          <hr className="my-2" />
 
-        <div className="flex flex-col justify-between h-full">
-          <div className="overflow-y-auto flex flex-col flex-grow">
-            <h1 className="text-2xl font-semibold">Basket</h1>
-            <hr className="my-2" />
-            {thisOrders.length == 0 ? (
-              <div
-                className="
-                  flex flex-row flex-grow text-center justify-center
-                "
-              >
-                <div className="self-center flex flex-col gap-y-2">
-                  <FontAwesomeIcon icon={faShoppingCart} className="text-4xl" />
-                  <div className="text-lg font-extralight italic">No Order</div>
+          {thisOrders.length == 0 ? (
+            <div
+              className="
+                self-center flex flex-col gap-y-2 items-center my-auto
+              "
+            >
+              <FontAwesomeIcon icon={faShoppingCart} className="text-4xl" />
+              <div className="text-lg font-extralight italic">No Order</div>
+            </div>
+          ) : (
+            <div className="flex-grow gap-y-2 overflow-y-auto h-0">
+              {thisOrders.map((order) => (
+                <OrderCard
+                  menuName={restaurantData.menus[order.menu_id].menu.name}
+                  menuImage={restaurantData.menus[order.menu_id].image}
+                  extraRequests={order.extra_requests}
+                  price={calculatePrice(
+                    restaurantData.menus[order.menu_id],
+                    order.options,
+                    order.quantity
+                  ).toString()}
+                  quantity={order.quantity}
+                  onEdit={() => {
+                    setCustomizing(order);
+                  }}
+                  onDelete={() => {
+                    setThisOrders(thisOrders.filter((x) => x !== order));
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {thisOrders.length != 0 ? (
+          <div
+            className="
+            flex flex-col bg-slate-100 pb-4 md:pb-0 md:pt-4 md:grow 
+            md:border-l-[1.5px] md:border-black-900"
+          >
+            <div className="hidden md:block">
+              <h1 className="text-2xl font-semibold m-2 line-clamp-1">
+                Checkout
+              </h1>
+              <hr className="mx-2 mb-2"></hr>
+            </div>
+            <hr className="mb-2 md:hidden"></hr>
+
+            <div
+              className="
+                flex flex-col md:bg-white px-4 md:mb-2 md:py-2 md:mx-2 
+                md:shadow-inner rounded-xl grow justify-between 
+              "
+            >
+              <div className="mb-4">
+                <div className="">
+                  <div className="flex flex-row justify-between items-center">
+                    <div className="flex flex-row items-center gap-x-2 my-1">
+                      <FontAwesomeIcon icon={faSort} />
+                      <h1 className="line-clamp-1">Queues</h1>
+                    </div>
+                    <h1 className="line-clamp-1">
+                      {queue.queue_count == 0
+                        ? "None"
+                        : `${queue.queue_count} queue(s)`}
+                    </h1>
+                  </div>
+                  <hr></hr>
+                </div>
+
+                <div className="">
+                  <div className="flex flex-row justify-between items-center">
+                    <div className="flex flex-row items-center gap-x-2 my-1">
+                      <FontAwesomeIcon icon={faClock} />
+                      <h1 className="line-clamp-1">Estimated Time</h1>
+                    </div>
+                    <h1 className="line-clamp-1">
+                      {queue.estimated_time == 0
+                        ? "None"
+                        : `${queue.estimated_time} min(s)`}
+                    </h1>
+                  </div>
+                  <hr></hr>
+                </div>
+
+                <div className="">
+                  <div className="flex flex-row justify-between items-center">
+                    <div className="flex flex-row items-center gap-x-2 my-1">
+                      <FontAwesomeIcon icon={faBasketShopping} />
+                      <h1 className="">Quantity</h1>
+                    </div>
+                    <h1>32</h1>
+                  </div>
+                  <hr></hr>
                 </div>
               </div>
-            ) : null}
-            <div className="flex flex-col gap-y-2">
-              {thisOrders.length == 0
-                ? null
-                : thisOrders.map((order) => (
-                    <OrderCard
-                      menuName={restaurantData.menus[order.menu_id].menu.name}
-                      menuImage={pickMenuImage(order.menu_id)}
-                      extraRequests={order.extra_requests}
-                      price={calculatePrice(
-                        restaurantData.menus[order.menu_id],
-                        order.options,
-                        order.quantity
-                      ).toString()}
-                      quantity={order.quantity}
-                      onEdit={() => {
-                        setCustomizing(order);
-                      }}
-                      onDelete={() => {
-                        setThisOrders(thisOrders.filter((x) => x !== order));
-                      }}
-                    />
-                  ))}
-            </div>
-          </div>
-          <div className="flex flex-row justify-center mt-4">
-            <div
-              className={
-                `bg-gradient-to-r p-3 rounded-xl
-                drop-shadow-lg hover:cursor-pointer hover:shadow-2xl flex
-                flex-row gap-x-5 md:gap-x-10 ` +
-                (thisOrders.length == 0
-                  ? "from-gray-300 to-gray-400 text-red-700"
-                  : "from-orange-300 to-red-400")
-              }
-            >
-              <FontAwesomeIcon icon={faBasketShopping} className="text-2xl" />
-              <div className="">
-                {thisOrders.length == 0 ? "No Orders" : `Proceed to Checkout`}
+
+              <div
+                className={
+                  `bg-gradient-to-r py-2 px-6 rounded-xl self-center drop-shadow-lg 
+                hover:cursor-pointer hover:shadow-2xl flex flex-row w-4/5
+                justify-between items-center  ` +
+                  (thisOrders.length == 0
+                    ? "from-gray-300 to-gray-400 text-red-700"
+                    : "from-orange-300 to-red-400")
+                }
+              >
+                <div className="flex flex-row items-center gap-x-2">
+                  <FontAwesomeIcon icon={faMoneyBill} />
+                  <div>{thisOrders.length == 0 ? "No Orders" : `Order`}</div>
+                </div>
+                <div>{`฿${thisOrders.reduce((acc, x) => {
+                  return acc.plus(
+                    calculatePrice(
+                      restaurantData.menus[x.menu_id],
+                      x.options,
+                      x.quantity
+                    )
+                  );
+                }, new Decimal(0))}`}</div>
               </div>
-              <div>{`฿${thisOrders.reduce((acc, x) => {
-                return acc.plus(
-                  calculatePrice(
-                    restaurantData.menus[x.menu_id],
-                    x.options,
-                    x.quantity
-                  )
-                );
-              }, new Decimal(0))}`}</div>
             </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </div>
   );
@@ -237,21 +295,21 @@ const OrderPopup = ({
     >
       <div
         className="
-          bg-white my-10 rounded-2xl drop-shadow-2xl p-6 flex flex-col 
-          mx-auto min-w-[80%] md:min-w-[70%]
+          bg-white rounded-2xl drop-shadow-2xl flex flex-col mx-auto 
+          min-w-[80%] md:min-w-[70%] w-[80%] h-[90%] my-auto overflow-hidden
         "
       >
-        <FontAwesomeIcon
-          icon={faClose}
-          className="absolute self-end hover:cursor-pointer z-10"
-          onClick={() => onClose()}
-        />
-        <div className="flex flex-col justify-between h-full">
-          <div className="overflow-y-auto flex flex-col">
-            <h1 className="text-2xl font-semibold">
-              {restaurantData.menus[menu_id].menu.name}
-            </h1>
-            <hr className="my-2" />
+        <div className="flex flex-col grow ml-6 mr-6 mt-6">
+          <FontAwesomeIcon
+            icon={faClose}
+            className="absolute self-end hover:cursor-pointer z-10"
+            onClick={() => onClose()}
+          />
+          <h1 className="text-2xl font-semibold">
+            {restaurantData.menus[menu_id].menu.name}
+          </h1>
+          <hr className="my-2" />
+          <div className="flex flex-col overflow-y-auto grow h-0">
             {restaurantData.menus[menu_id].menu.description != null ? (
               <div>
                 <div className="font-light text-sm mb-4">
@@ -269,7 +327,6 @@ const OrderPopup = ({
                 </div>
               </div>
             )}
-
             {Object.values(restaurantData.menus[menu_id].customizations).map(
               (customization) => (
                 <div className="px-2">
@@ -369,7 +426,6 @@ const OrderPopup = ({
                 </div>
               )
             )}
-
             <div className="px-2">
               <h1 className="text-xl font-semibold">Customer Request</h1>
               <hr className="my-2" />
@@ -390,73 +446,74 @@ const OrderPopup = ({
               />
             </div>
           </div>
-          <div>
-            <div
-              className="
+        </div>
+        <div className="flex flex-col justify-between bg-slate-50 pb-6">
+          <hr></hr>
+          <div
+            className="
                 sticky top-10 flex flex-col items-center w-[100%] pt-4
               "
-            >
-              <div className="flex flex-row space-x-4 items-center">
-                <FontAwesomeIcon
-                  icon={faMinus}
-                  className="
+          >
+            <div className="flex flex-row space-x-4 items-center">
+              <FontAwesomeIcon
+                icon={faMinus}
+                className="
                     rounded-full bg-green-400 p-2 shadow-sm 
                     hover:cursor-pointer hover:bg-green-500
                   "
-                  onClick={() => {
-                    if (ordering.quantity == 1) {
-                      return;
-                    }
+                onClick={() => {
+                  if (ordering.quantity == 1) {
+                    return;
+                  }
 
-                    setOrdering({
-                      ...ordering,
-                      quantity: ordering.quantity - 1,
-                    });
-                  }}
-                />
-                <div>{`x${ordering.quantity}`}</div>
-                <FontAwesomeIcon
-                  icon={faPlus}
-                  className="
+                  setOrdering({
+                    ...ordering,
+                    quantity: ordering.quantity - 1,
+                  });
+                }}
+              />
+              <div>{`x${ordering.quantity}`}</div>
+              <FontAwesomeIcon
+                icon={faPlus}
+                className="
                     rounded-full bg-green-400 p-2 shadow-sm 
                     hover:cursor-pointer hover:bg-green-500
                   "
-                  onClick={() => {
-                    setOrdering({
-                      ...ordering,
-                      quantity: ordering.quantity + 1,
-                    });
-                  }}
-                />
-              </div>
-              <div
-                className={
-                  `rounded-xl bg-gradient-to-r py-2 px-4 mt-6 shadow-lg 
+                onClick={() => {
+                  setOrdering({
+                    ...ordering,
+                    quantity: ordering.quantity + 1,
+                  });
+                }}
+              />
+            </div>
+            <div
+              className={
+                `rounded-xl bg-gradient-to-r py-2 px-4 mt-6 shadow-lg 
                       w-[75%] text-center flex justify-between ` +
-                  (requiredSelected()
-                    ? `from-orange-300 to-red-400 hover:cursor-pointer 
+                (requiredSelected()
+                  ? `from-orange-300 to-red-400 hover:cursor-pointer 
                           hover:shadow-xl`
-                    : "from-slate-100 to-gray-300 text-red-700 ")
-                }
-                onClick={
-                  requiredSelected()
-                    ? () => {
-                        onConfirmation(
-                          ordering.quantity,
-                          ordering.options,
-                          ordering.request
-                        );
-                      }
-                    : undefined
-                }
-              >
-                <div>{confirmationText}</div>
-                <div>{`฿${calculatePrice(
-                  restaurantData.menus[menu_id],
-                  ordering.options,
-                  ordering.quantity
-                )}`}</div>
-              </div>
+                  : "from-slate-100 to-gray-300 text-red-700 ")
+              }
+              onClick={
+                requiredSelected()
+                  ? () => {
+                      onConfirmation(
+                        ordering.quantity,
+                        ordering.options,
+                        ordering.request
+                      );
+                    }
+                  : undefined
+              }
+            >
+              <div>{confirmationText}</div>
+              <div>{`฿${calculatePrice(
+                restaurantData.menus[menu_id],
+                ordering.options,
+                ordering.quantity
+              )}`}</div>
             </div>
           </div>
         </div>
@@ -617,6 +674,7 @@ const MainPage = ({ restaurantData }) => {
     } else if (page.popup.type === "basket") {
       return (
         <BasketPopup
+          queue={restaurantData.queue}
           orders={cookie.order.order_items}
           restaurantData={restaurantData}
           onClose={(orders) => {
@@ -641,20 +699,16 @@ const MainPage = ({ restaurantData }) => {
   return (
     <div className="mx-auto">
       <img
-        src={
-          restaurantData.image == null
-            ? defaultRestaurantImage
-            : URL.createObjectURL(restaurantData.image)
-        }
+        src={restaurantData.image}
         className="
-            top-0 absolute w-[100%] h-auto max-h-[25vh] object-center 
-            object-cover min-h-40 drop-shadow-2xl
+          top-0 absolute w-[100%] h-auto max-h-[25vh] object-center object-cover 
+          min-h-40 drop-shadow-2xl
         "
       />
       <div
         className="
-            bg-slate-50 rounded-xl md:w-fit p-4 mx-4 md:mx-auto md:min-w-[50%] 
-            mt-20 drop-shadow-xl
+        bg-slate-50 rounded-xl md:w-fit p-4 mx-4 md:mx-auto md:min-w-[50%] 
+          mt-20 drop-shadow-xl
         "
       >
         <div className="flex justify-between pb-4">
@@ -670,8 +724,21 @@ const MainPage = ({ restaurantData }) => {
           </div>
           <hr></hr>
           <div className="flex justify-between text-sm p-1">
-            <div>Current Queue</div>
-            <div>32</div>
+            <div>Queues</div>
+            <div>
+              {restaurantData.queue.queue_count == 0
+                ? "None"
+                : `${restaurantData.queue.queue_count} queue(s)`}
+            </div>
+          </div>
+          <hr></hr>
+          <div className="flex justify-between text-sm p-1">
+            <div>Estimated Time</div>
+            <div>
+              {restaurantData.queue.estimated_time == 0
+                ? "None"
+                : `${restaurantData.queue.estimated_time} min(s)`}
+            </div>
           </div>
           <hr></hr>
           <div className="flex justify-between text-sm p-1">
@@ -698,11 +765,7 @@ const MainPage = ({ restaurantData }) => {
               key={id}
             >
               <img
-                src={
-                  menu.image == null
-                    ? defaultMenuImage
-                    : URL.createObjectURL(menu.image)
-                }
+                src={menu.image}
                 className="
                 aspect-square h-full w-auto p-2 object-cover object-center
                 rounded-xl drop-shadow-sm md:p-0 md:rounded-none
@@ -756,7 +819,7 @@ const MainPage = ({ restaurantData }) => {
       <div
         className="
           sticky bottom-5 mx-auto text-center bg-gradient-to-r from-orange-300 
-          to-red-400 rounded-xl p-4 z-2 drop-shadow-xl flex min-w-50
+          to-red-400 rounded-xl px-6 py-2 z-2 drop-shadow-xl flex min-w-50
           justify-between w-[50%] hover:cursor-pointer hover:shadow-2xl
         "
         onClick={
@@ -772,8 +835,8 @@ const MainPage = ({ restaurantData }) => {
               }
         }
       >
-        <div className="flex gap-x-2">
-          <FontAwesomeIcon icon={faBasketShopping} className="text-2xl" />
+        <div className="flex gap-x-2 items-center">
+          <FontAwesomeIcon icon={faBasketShopping} className="text" />
           <div>{`x${totlaQuantity}`}</div>
         </div>
         <div>{totlaQuantity == 0 ? "No Orders" : `฿${totalPrice}`}</div>
@@ -787,7 +850,7 @@ const MainPage = ({ restaurantData }) => {
  * @typedef {Object} MenuData
  *
  * @property {Menu} menu
- * @property {Blob | null} image
+ * @property {string} image
  * @property {{[key: number]: Customization}} customizations
  * @property {{[key: number]: Option}} options
  */
@@ -796,8 +859,9 @@ const MainPage = ({ restaurantData }) => {
  * @typedef {Object} RestaurantData
  *
  * @property {Restaurant} restaurant
- * @property {Blob | null} image
+ * @property {string} image
  * @property {{[key: number]: MenuData}} menus
+ * @property {Queue} queue
  */
 
 /**
@@ -811,7 +875,7 @@ const Restaurant = () => {
   }
 
   const [restaurant, setRestaurant] = useState(
-    /** @type {RestaurantData | undefined}*/
+    /** @type {RestaurantData | undefined | null}*/
     (undefined)
   );
 
@@ -819,54 +883,66 @@ const Restaurant = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const restaurant = await getRestaurant(restaurantID);
+      try {
+        const restaurant = await getRestaurant(restaurantID);
+        const restaurantImage = await getRestaurantImage(restaurantID);
+        const menus = await getRestaurantMenus(restaurantID);
 
-      if (restaurant == null) {
-        throw new Error("Error fetching restaurant");
-      }
+        /** @type {{[id: number]: MenuData}} */
+        let menuDatas = {};
 
-      const restaurantImage = await getRestaurantImage(restaurantID);
-      const menus = await getRestaurantMenus(restaurantID);
+        for (const menu of menus) {
+          const menuImage = await getMenuImage(menu.id);
 
-      /** @type {{[id: number]: MenuData}} */
-      let menuDatas = {};
+          /** @type {MenuData}  */
+          let menuData = {
+            menu: menu,
+            image:
+              menuImage == null
+                ? defaultMenuImage
+                : URL.createObjectURL(menuImage),
+            customizations: {},
+            options: {},
+          };
 
-      for (const menu of menus) {
-        /** @type {MenuData}  */
-        let menuData = {
-          menu: menu,
-          image: await getMenuImage(menu.id),
-          customizations: {},
-          options: {},
-        };
+          const customization = await getMenuCustomizations(menu.id);
 
-        const customization = await getMenuCustomizations(menu.id);
-
-        for (const c of customization) {
-          menuData.customizations[c.id] = c;
-          for (const o of c.options) {
-            menuData.options[o.id] = o;
+          for (const c of customization) {
+            menuData.customizations[c.id] = c;
+            for (const o of c.options) {
+              menuData.options[o.id] = o;
+            }
           }
+
+          menuDatas[menu.id] = menuData;
         }
 
-        menuDatas[menu.id] = menuData;
-      }
+        const queue = await getRestaurantQueue(restaurantID);
 
-      setRestaurant({
-        restaurant: restaurant,
-        image: restaurantImage,
-        menus: menuDatas,
-      });
+        setRestaurant({
+          restaurant: restaurant,
+          image:
+            restaurantImage == null
+              ? defaultRestaurantImage
+              : URL.createObjectURL(restaurantImage),
+          menus: menuDatas,
+          queue: queue,
+        });
+      } catch (error) {
+        setRestaurant(null);
+      }
     };
 
     getData();
   }, []);
 
-  return restaurant === undefined ? (
-    <LoadingPage opacity={true} />
-  ) : (
-    <MainPage restaurantData={restaurant} />
-  );
+  if (restaurant === undefined) {
+    return <LoadingPage opacity={true} />;
+  } else if (restaurant === null) {
+    return <ErrorPage message="We couldn't find the restaurant for you" />;
+  } else {
+    return <MainPage restaurantData={restaurant} />;
+  }
 };
 
 export default Restaurant;

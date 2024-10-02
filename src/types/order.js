@@ -20,4 +20,11 @@
  * @property {OrderItem[]} order_items
  */
 
+/**
+ * @typedef {Object} Queue
+ *
+ * @property {number} queue_count
+ * @property {number} estimated_time
+ */
+
 export {};
