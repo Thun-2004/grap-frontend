@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 
-body{
+/* body{
   min-width: 693px;
-}
+} */
 
 .general-card{
   @apply rounded-3xl shadow-xl p-4;
