@@ -12,7 +12,7 @@ body{
 }
 
 .sidebar-button {
-  @apply text-white hover:text-black hover:bg-white rounded-xl w-10 text-center px-2.5 py-2.5 ;
+  @apply text-white hover:text-black hover:bg-white rounded-xl w-10 h-10 text-center flex;
 }
 
 .gradient-color {
@@ -37,7 +37,7 @@ body{
 
 /* sidebar */
 .sidebar-icon {
-  @apply size-6 mr-3 ; 
+  @apply size-6 self-center mx-auto; 
 }
 
 .nav-link{

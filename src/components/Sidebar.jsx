@@ -8,10 +8,10 @@ const SideBar = () => {
     return (    
         <div className="fixed left-8 md:w-28 w-0 h-screen py-4">
             <div className='bg-gradient-to-b from-[#FC7413] to-[#A71818] h-full w-full rounded-xl justify-center text-center flex flex-col z-20'>
-                <div className="lg:block md:block hidden">
-                    <div className="flex flex-col space-y-56 md:space-y-44 ">
+                <div className="md:flex md:grow hidden mx-auto">
+                    <div className="flex flex-col w-full grow justify-between items-center py-7">
                         <FontAwesomeIcon className="text-5xl text-white" icon={faUtensils} />
-                        <div className="flex flex-col space-y-7">
+                        <div className="flex flex-col space-y-10 items-center">
                             <NavLink to="/">
                                 <button type="button" className="sidebar-button">
                                     <FontAwesomeIcon icon={faHouse} className="sidebar-icon"/>
@@ -38,7 +38,7 @@ const SideBar = () => {
                                 </button>
                             </NavLink>
                         </div>
-                        <FontAwesomeIcon className="sidebar-button text-3xl ml-7" icon={faArrowRightFromBracket} />
+                        <FontAwesomeIcon className="sidebar-button text-3xl" icon={faArrowRightFromBracket} />
                     </div>
                 </div>
                 
