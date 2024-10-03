@@ -8,7 +8,7 @@
 } */
 
 .general-card{
-  @apply rounded-3xl shadow-xl p-4;
+  @apply rounded-3xl drop-shadow-md p-4;
 }
 
 .sidebar-button {
@@ -37,6 +37,9 @@
 
 /* sidebar */
 .sidebar-icon {
+  @apply size-6 self-center mx-auto; 
+}
+.bottom-bar-icon {
   @apply size-6 self-center mx-auto; 
 }
 
@@ -79,7 +82,7 @@
 } */
 
 .carousel-item-spacing{
-  padding-right: 10px; 
+  @apply p-2
 }
 
 /* comment page */

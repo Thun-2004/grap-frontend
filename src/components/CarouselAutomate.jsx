@@ -46,6 +46,7 @@ const CarouselAutomate = () => {
       removeArrowOnDeviceType={["desktop"]}
       autoPlaySpeed={3000}
       showDots={true}
+      itemClass="carousel-item-spacing"
     >
       {carouselItems.map((item) => (
           <Banner key={item.id} />
