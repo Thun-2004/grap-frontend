@@ -15,17 +15,21 @@ const Home = () => {
                 <Header/>
             </div>
 
-            <div className="flex flex-col w-screen lg:w-10/12 pr-2">
-                <div className="w-full mr-10 pr-10">
+            <div className="flex flex-col w-0 grow ">
+                <div className="w-full">
                     {/* for q */}
                     <CarouselAutomate/>
                 </div>
 
-                <div className="w-full mt-8 block lg:hidden">
+                <div className="w-full mt-8 flex flex-col">
                     <h1 className='heading-font mb-5'>My Queue(1)</h1>
-                    <div className="flex">
-                        <QueueCard/>
-                        <QueueCard/>
+                    <div className='flex'>
+                        <div className='flex w-0 grow overflow-x-auto'>
+                            <QueueCard/>
+                            <QueueCard/>
+                            <QueueCard/>
+                            <QueueCard/>
+                        </div>
                     </div>
                 </div>
 
@@ -34,19 +38,12 @@ const Home = () => {
                     <CarouselComponent/>
                 </div>
                 
-                <div className="">
+                <div className="flex flex-col">
                     <div className="">
                         <h1 className='heading-font'>Food from your nearest: Canteen A</h1>
                     </div>  
                     <RestaurantCard/>
                     <RestaurantCard/>
-                </div>
-            </div>
-            <div className="w-0 lg:w-full hidden lg:block">
-                <h1 className='heading-font mb-5'>My Queue(1)</h1>
-                <div className="flex flex-col">
-                    <QueueCard/>
-                    <QueueCard/>
                 </div>
             </div>
         </div>
