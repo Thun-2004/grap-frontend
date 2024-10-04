@@ -47,6 +47,7 @@ const CarouselAutomate = () => {
       autoPlaySpeed={3000}
       showDots={true}
       itemClass="carousel-item-spacing"
+      className="-mx-2"
     >
       {carouselItems.map((item) => (
           <Banner key={item.id} />
