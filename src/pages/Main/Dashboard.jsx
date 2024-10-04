@@ -11,11 +11,8 @@ const Dashboard = () => {
     return (
         <Router>
             <div className="flex">
-                <div className="relative z-20">
-                    <SideBar/>
-                </div>
                 <div className="flex-grow flex flex-col">
-                    <div className="absolute top-32 right-0 left-0 md:left-40 sm:left-0">
+                    <div className="absolute top-24 md:top-32 right-0 left-0 md:left-40 sm:left-0">
                         <Routes>
                             <Route path="/" element={<Home/>}/>
                         </Routes>
@@ -28,6 +25,9 @@ const Dashboard = () => {
                         </Routes>
                     </div>
                 </div>
+            </div>
+            <div className="sticky z-20">
+                <SideBar/>
             </div>
         </Router>
         

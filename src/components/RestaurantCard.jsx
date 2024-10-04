@@ -33,7 +33,7 @@ const RestaurantCard = ( {storeName, food, img, canteenName, busyness, queue, ra
                             }
                         </button> 
                     </div>
-                    <hr></hr>
+                    <hr className='mt-2 md:mt-3'></hr>
                     <div className="md:space-y-2 flex md:justify-evenly flex-col w-full grow py-2 mx-1">
                         <div className='flex justify-between'>
                             <h2 className="card-info">Status:</h2>
@@ -56,7 +56,7 @@ const RestaurantCard = ( {storeName, food, img, canteenName, busyness, queue, ra
                     <div className='flex mx-1'>
                         <div className="flex w-0 grow overflow-x-clip">
                             <IdleTag name="Thai"/>
-                            <IdleTag name="Thai"/>
+                            <IdleTag name="CanteenA"/>
                         </div>
                     </div>
                 </div>
