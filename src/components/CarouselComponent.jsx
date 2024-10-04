@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CanteenCard from "./CanteenCard";
-import { getCanteenData } from "../api/canteenApi";
 
 const CarouselComponent = () => {
     const [canteens, setCanteens] = useState(null); 
     useEffect(() => {
         const fetchData = async() => {
             try{
-                const data = await getCanteenData(); 
+                const data = Array(10).fill(0).map((_, i) => ({
+                    id: i,
+                    name: `Canteen ${i+1}`,
+                }));
                 setCanteens(data);
             }catch(error){
                 console.log("Error fetching: ", error);
@@ -20,7 +22,7 @@ const CarouselComponent = () => {
 
     if (canteens == null){
         return (
-            <div className="w-screen h-screen"> 
+            <div className="w-full h-full"> 
                 Loading... 
             </div>);
     }
