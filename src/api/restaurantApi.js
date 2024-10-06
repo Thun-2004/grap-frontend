@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 /**
  * @import {Restaurant, Menu, Customization} from "../types/restaurant";
@@ -11,18 +11,18 @@ import axios from "axios";
  */
 
 export const getRestaurant = async (restaurantID) => {
-  const restaurant = await axios.get(
-    process.env.QUICKDISH_BACKEND_URL + `/restaurants/${restaurantID}`
-  );
-
-  if (restaurant.status !== 200) {
-    throw new Error(
-      `Error fetching restaurant data status: ${restaurant.status}; 
-        body: ${restaurant.data}`
+    const restaurant = await axios.get(
+        process.env.QUICKDISH_BACKEND_URL + `/restaurants/${restaurantID}`
     );
-  }
 
-  return restaurant.data;
+    if (restaurant.status !== 200) {
+        throw new Error(
+            `Error fetching restaurant data status: ${restaurant.status}; 
+            body: ${restaurant.data}`
+        );
+    }
+
+    return restaurant.data;
 };
 
 /**
@@ -30,21 +30,22 @@ export const getRestaurant = async (restaurantID) => {
  * @returns {Promise<Blob | null>}
  */
 export const getMenuImage = async (menuID) => {
-  const image = await axios.get(
-    process.env.QUICKDISH_BACKEND_URL + `/restaurants/menus/${menuID}/image`,
-    { responseType: "blob" }
-  );
+    const image = await axios.get(
+        process.env.QUICKDISH_BACKEND_URL +
+            `/restaurants/menus/${menuID}/image`,
+        { responseType: 'blob' }
+    );
 
-  if (image.status === 200) {
-    return image.data;
-  } else if (image.status === 204) {
-    return null;
-  }
+    if (image.status === 200) {
+        return image.data;
+    } else if (image.status === 204) {
+        return null;
+    }
 
-  throw new Error(
-    `Error fetching menu image status: ${image.status}; 
+    throw new Error(
+        `Error fetching menu image status: ${image.status}; 
         body: ${image.data}`
-  );
+    );
 };
 
 /**
@@ -52,18 +53,18 @@ export const getMenuImage = async (menuID) => {
  * @returns {Promise<Menu>}
  */
 export const getMenu = async (menuID) => {
-  const menu = await axios.get(
-    process.env.QUICKDISH_BACKEND_URL + `/restaurants/menus/${menuID}`
-  );
-
-  if (menu.status !== 200) {
-    throw new Error(
-      `Error fetching menu data status: ${menu.status}; 
-        body: ${menu.data}`
+    const menu = await axios.get(
+        process.env.QUICKDISH_BACKEND_URL + `/restaurants/menus/${menuID}`
     );
-  }
 
-  return menu.data;
+    if (menu.status !== 200) {
+        throw new Error(
+            `Error fetching menu data status: ${menu.status}; 
+            body: ${menu.data}`
+        );
+    }
+
+    return menu.data;
 };
 
 /**
@@ -71,18 +72,18 @@ export const getMenu = async (menuID) => {
  * @returns {Promise<Menu[]>}
  */
 export const getRestaurantMenus = async (restaurantID) => {
-  const menus = await axios.get(
-    process.env.QUICKDISH_BACKEND_URL + `/restaurants/${restaurantID}/menus`
-  );
-
-  if (menus.status !== 200) {
-    throw new Error(
-      `Error fetching restaurant menus status: ${menus.status}; 
-        body: ${menus.data}`
+    const menus = await axios.get(
+        process.env.QUICKDISH_BACKEND_URL + `/restaurants/${restaurantID}/menus`
     );
-  }
 
-  return menus.data;
+    if (menus.status !== 200) {
+        throw new Error(
+            `Error fetching restaurant menus status: ${menus.status}; 
+            body: ${menus.data}`
+        );
+    }
+
+    return menus.data;
 };
 
 /**
@@ -90,21 +91,22 @@ export const getRestaurantMenus = async (restaurantID) => {
  * @returns {Promise<Blob | null>}
  */
 export const getRestaurantImage = async (restaurantID) => {
-  const image = await axios.get(
-    process.env.QUICKDISH_BACKEND_URL + `/restaurants/${restaurantID}/image`,
-    { responseType: "blob" }
-  );
+    const image = await axios.get(
+        process.env.QUICKDISH_BACKEND_URL +
+            `/restaurants/${restaurantID}/image`,
+        { responseType: 'blob' }
+    );
 
-  if (image.status === 200) {
-    return image.data;
-  } else if (image.status === 204) {
-    return null;
-  }
+    if (image.status === 200) {
+        return image.data;
+    } else if (image.status === 204) {
+        return null;
+    }
 
-  throw new Error(
-    `Error fetching restaurant image status: ${image.status}; 
+    throw new Error(
+        `Error fetching restaurant image status: ${image.status}; 
         body: ${image.data}`
-  );
+    );
 };
 
 /**
@@ -112,17 +114,17 @@ export const getRestaurantImage = async (restaurantID) => {
  * @returns {Promise<Customization[]>}
  */
 export const getMenuCustomizations = async (menuID) => {
-  const customizations = await axios.get(
-    process.env.QUICKDISH_BACKEND_URL +
-      `/restaurants/menus/${menuID}/customizations`
-  );
-
-  if (customizations.status !== 200) {
-    throw new Error(
-      `Error fetching menu customizations status: ${customizations.status}; 
-        body: ${customizations.data}`
+    const customizations = await axios.get(
+        process.env.QUICKDISH_BACKEND_URL +
+            `/restaurants/menus/${menuID}/customizations`
     );
-  }
 
-  return customizations.data;
+    if (customizations.status !== 200) {
+        throw new Error(
+            `Error fetching menu customizations status: ${customizations.status}; 
+            body: ${customizations.data}`
+        );
+    }
+
+    return customizations.data;
 };
