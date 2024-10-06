@@ -34,13 +34,14 @@ const OrderCard = ({
   <div
     className="
     bg-slate-50 shadow-inner rounded-md flex flex-row overflow-hidden p-2
+      h-28
     "
   >
     <img
       src={menuImage}
       className="
-        aspect-square h-24 object-cover object-
-        center rounded-xl drop-shadow-md self-center
+        aspect-square h-24 object-cover object-center rounded-xl drop-shadow-md 
+        self-center hidden sm:block
       "
     />
     <div className="flex flex-row justify-between flex-grow">

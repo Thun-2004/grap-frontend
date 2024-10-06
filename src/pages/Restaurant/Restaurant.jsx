@@ -1,13 +1,13 @@
 // @ts-check
 
-import React, { useMemo } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Decimal from "decimal.js";
+import React, { useMemo } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Decimal from 'decimal.js';
 
 // @ts-expect-error
-import defaultRestaurantImage from "../../assets/defaultRestaurant.jpeg";
+import defaultRestaurantImage from '../../assets/defaultRestaurant.jpeg';
 // @ts-expect-error
-import defaultMenuImage from "../../assets/defaultMenu.webp";
+import defaultMenuImage from '../../assets/defaultMenu.webp';
 
 /**
  * @import {
@@ -32,21 +32,22 @@ import {
   faShoppingCart,
   faSort,
   faMoneyBill,
-} from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+} from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
 import {
   getRestaurant,
   getRestaurantImage,
   getRestaurantMenus,
   getMenuImage,
   getMenuCustomizations,
-} from "../../api/restaurantApi";
-import { LoadingPage } from "../../components/LoadingPage";
-import ErrorPage from "../Others/Error";
-import OrderCard from "../../components/OrderCard";
-import { useParams } from "react-router-dom";
-import { useCookies } from "react-cookie";
-import { getRestaurantQueue } from "../../api/orderApi";
+} from '../../api/restaurantApi';
+import { LoadingPage } from '../../components/LoadingPage';
+import ErrorPage from '../Others/Error';
+import OrderCard from '../../components/OrderCard';
+import { useParams } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { getRestaurantQueue } from '../../api/orderApi';
+import Header from '../../components/Header';
 
 /**
  * @param {{
@@ -85,29 +86,25 @@ const BasketPopup = ({ queue, orders, restaurantData, onClose }) => {
 
         setCustomizing(null);
       }}
-      confirmationText={"Confirm"}
+      confirmationText={'Confirm'}
     />
   ) : (
     <div
       className="
-        fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-10 flex
+        fixed bottom-0 left-0 right-0 top-0 z-[20] flex bg-black bg-opacity-10
       "
     >
       <div
         className="
-          bg-white rounded-2xl drop-shadow-2xl flex flex-col
-          mx-auto min-w-[80%] md:min-w-[70%] w-[80%] h-[90%] my-auto
-          md:flex-row overflow-hidden
+          md:min-w-[70%]c mx-auto my-auto flex h-[90%] w-[80%] min-w-[80%] 
+          flex-col overflow-hidden rounded-2xl bg-white drop-shadow-2xl
+          md:flex-row
         "
       >
-        <div
-          className="
-            flex flex-col ml-6 mr-6 mt-6 grow
-          "
-        >
+        <div className="relative ml-6 mr-6 mt-6 flex grow flex-col">
           <FontAwesomeIcon
             icon={faClose}
-            className="absolute self-end hover:cursor-pointer z-10"
+            className="absolute z-10 self-end hover:cursor-pointer"
             onClick={() => {
               onClose(thisOrders);
             }}
@@ -118,14 +115,14 @@ const BasketPopup = ({ queue, orders, restaurantData, onClose }) => {
           {thisOrders.length == 0 ? (
             <div
               className="
-                self-center flex flex-col gap-y-2 items-center my-auto
+                my-auto flex flex-col items-center gap-y-2 self-center
               "
             >
               <FontAwesomeIcon icon={faShoppingCart} className="text-4xl" />
               <div className="text-lg font-extralight italic">No Order</div>
             </div>
           ) : (
-            <div className="flex-grow gap-y-2 overflow-y-auto h-0">
+            <div className="h-0 flex-grow space-y-2 overflow-y-auto">
               {thisOrders.map((order) => (
                 <OrderCard
                   menuName={restaurantData.menus[order.menu_id].menu.name}
@@ -143,6 +140,7 @@ const BasketPopup = ({ queue, orders, restaurantData, onClose }) => {
                   onDelete={() => {
                     setThisOrders(thisOrders.filter((x) => x !== order));
                   }}
+                  key={order.menu_id}
                 />
               ))}
             </div>
@@ -152,33 +150,34 @@ const BasketPopup = ({ queue, orders, restaurantData, onClose }) => {
         {thisOrders.length != 0 ? (
           <div
             className="
-            flex flex-col bg-slate-100 pb-4 md:pb-0 md:pt-4 md:grow 
-            md:border-l-[1.5px] md:border-black-900"
+              md:border-black-900 flex flex-col bg-slate-100 pb-6 md:grow md:border-l-[1.5px] 
+              md:pb-0 md:pt-4
+            "
           >
             <div className="hidden md:block">
-              <h1 className="text-2xl font-semibold m-2 line-clamp-1">
+              <h1 className="m-2 line-clamp-1 text-2xl font-semibold">
                 Checkout
               </h1>
               <hr className="mx-2 mb-2"></hr>
             </div>
-            <hr className="mb-2 md:hidden"></hr>
+            <hr className="mb-4 md:hidden"></hr>
 
             <div
               className="
-                flex flex-col md:bg-white px-4 md:mb-2 md:py-2 md:mx-2 
-                md:shadow-inner rounded-xl grow justify-between 
+                flex grow flex-col justify-between rounded-xl px-4 md:mx-2 md:mb-2 
+                md:bg-white md:pb-6 md:pt-2 md:shadow-inner 
               "
             >
-              <div className="mb-4">
+              <div className="mb-6">
                 <div className="">
-                  <div className="flex flex-row justify-between items-center">
-                    <div className="flex flex-row items-center gap-x-2 my-1">
+                  <div className="flex flex-row items-center justify-between">
+                    <div className="my-1 flex flex-row items-center gap-x-2">
                       <FontAwesomeIcon icon={faSort} />
                       <h1 className="line-clamp-1">Queues</h1>
                     </div>
                     <h1 className="line-clamp-1">
                       {queue.queue_count == 0
-                        ? "None"
+                        ? 'None'
                         : `${queue.queue_count} queue(s)`}
                     </h1>
                   </div>
@@ -186,14 +185,14 @@ const BasketPopup = ({ queue, orders, restaurantData, onClose }) => {
                 </div>
 
                 <div className="">
-                  <div className="flex flex-row justify-between items-center">
-                    <div className="flex flex-row items-center gap-x-2 my-1">
+                  <div className="flex flex-row items-center justify-between">
+                    <div className="my-1 flex flex-row items-center gap-x-2">
                       <FontAwesomeIcon icon={faClock} />
                       <h1 className="line-clamp-1">Estimated Time</h1>
                     </div>
                     <h1 className="line-clamp-1">
                       {queue.estimated_time == 0
-                        ? "None"
+                        ? 'None'
                         : `${queue.estimated_time} min(s)`}
                     </h1>
                   </div>
@@ -201,8 +200,8 @@ const BasketPopup = ({ queue, orders, restaurantData, onClose }) => {
                 </div>
 
                 <div className="">
-                  <div className="flex flex-row justify-between items-center">
-                    <div className="flex flex-row items-center gap-x-2 my-1">
+                  <div className="flex flex-row items-center justify-between">
+                    <div className="my-1 flex flex-row items-center gap-x-2">
                       <FontAwesomeIcon icon={faBasketShopping} />
                       <h1 className="">Quantity</h1>
                     </div>
@@ -214,17 +213,17 @@ const BasketPopup = ({ queue, orders, restaurantData, onClose }) => {
 
               <div
                 className={
-                  `bg-gradient-to-r py-2 px-6 rounded-xl self-center drop-shadow-lg 
-                hover:cursor-pointer hover:shadow-2xl flex flex-row w-4/5
-                justify-between items-center  ` +
+                  `flex w-4/5 flex-row items-center justify-between self-center 
+                rounded-xl bg-gradient-to-r px-6 py-2 drop-shadow-lg
+                hover:cursor-pointer hover:shadow-2xl  ` +
                   (thisOrders.length == 0
-                    ? "from-gray-300 to-gray-400 text-red-700"
-                    : "from-orange-300 to-red-400")
+                    ? 'from-gray-300 to-gray-400 text-red-700'
+                    : 'from-orange-300 to-red-400')
                 }
               >
                 <div className="flex flex-row items-center gap-x-2">
                   <FontAwesomeIcon icon={faMoneyBill} />
-                  <div>{thisOrders.length == 0 ? "No Orders" : `Order`}</div>
+                  <div>{thisOrders.length == 0 ? 'No Orders' : `Order`}</div>
                 </div>
                 <div>{`฿${thisOrders.reduce((acc, x) => {
                   return acc.plus(
@@ -290,39 +289,40 @@ const OrderPopup = ({
   return (
     <div
       className="
-        fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-10 flex
+        fixed bottom-0 left-0 right-0 top-0 z-[20] flex bg-black bg-opacity-10
       "
     >
       <div
         className="
-          bg-white rounded-2xl drop-shadow-2xl flex flex-col mx-auto 
-          min-w-[80%] md:min-w-[70%] w-[80%] h-[90%] my-auto overflow-hidden
+          mx-auto my-auto flex h-[90%] w-[80%] min-w-[80%] 
+          flex-col overflow-hidden rounded-2xl bg-white drop-shadow-2xl 
+          md:min-w-[70%]
         "
       >
-        <div className="flex flex-col grow ml-6 mr-6 mt-6">
+        <div className="relative ml-6 mr-6 mt-6 flex grow flex-col">
           <FontAwesomeIcon
             icon={faClose}
-            className="absolute self-end hover:cursor-pointer z-10"
+            className="absolute z-10 self-end hover:cursor-pointer"
             onClick={() => onClose()}
           />
           <h1 className="text-2xl font-semibold">
             {restaurantData.menus[menu_id].menu.name}
           </h1>
           <hr className="my-2" />
-          <div className="flex flex-col overflow-y-auto grow h-0">
+          <div className="flex h-0 grow flex-col overflow-y-auto">
             {restaurantData.menus[menu_id].menu.description != null ? (
               <div>
-                <div className="font-light text-sm mb-4">
+                <div className="mb-4 text-sm font-light">
                   {restaurantData.menus[menu_id].menu.description}
                 </div>
               </div>
             ) : null}
             {restaurantData.menus[menu_id].menu.estimated_prep_time ==
             null ? null : (
-              <div className="flex flex-row items-center mb-4">
+              <div className="mb-4 flex flex-row items-center">
                 <FontAwesomeIcon icon={faClock} className="mr-2" />
                 <div className="text-sm font-light">
-                  Estaimted Duratoin:{" "}
+                  Estaimted Duratoin:{' '}
                   {`${restaurantData.menus[menu_id].menu.estimated_prep_time} mins`}
                 </div>
               </div>
@@ -332,7 +332,7 @@ const OrderPopup = ({
                 <div className="px-2">
                   <div
                     className="
-                      flex flex-row justify-between items-center space-x-2
+                      flex flex-row items-center justify-between space-x-2
                     "
                   >
                     <h1 className="text-xl font-semibold">
@@ -341,7 +341,7 @@ const OrderPopup = ({
                         : customization.title}
                     </h1>
                     {customization.required ? (
-                      <div className="text-red-700 font-light italic">
+                      <div className="font-light italic text-red-700">
                         required
                       </div>
                     ) : null}
@@ -354,15 +354,15 @@ const OrderPopup = ({
                   ) : null}
                   <div
                     className="
-                      flex flex-col bg-slate-50 p-2 rounded-md shadow-inner
-                      my-2
+                      my-2 flex flex-col rounded-md bg-slate-50 p-2
+                      shadow-inner
                     "
                   >
                     {customization.options.map((option) => (
                       <>
                         <div
                           className="
-                            flex flex-row justify-between items-center
+                            flex flex-row items-center justify-between
                           "
                         >
                           <div className="flex flex-row space-x-2">
@@ -414,7 +414,7 @@ const OrderPopup = ({
                           </div>
                           {option.extra_price != null &&
                           parseFloat(option.extra_price) > 0 ? (
-                            <div className="font-light text-sm">
+                            <div className="text-sm font-light">
                               {`+${new Decimal(option.extra_price)}`}
                             </div>
                           ) : null}
@@ -431,8 +431,8 @@ const OrderPopup = ({
               <hr className="my-2" />
               <textarea
                 className="
-                  w-full bg-slate-50 shadow-inner p-2 font-light text-sm 
-                  resize-none  min-h-20 focus:outline-none rounded-md
+                  min-h-20 w-full resize-none rounded-md bg-slate-50 p-2 
+                  text-sm  font-light shadow-inner focus:outline-none
                 "
                 placeholder="Extra Request to the Restaurant"
                 value={ordering.request}
@@ -451,10 +451,10 @@ const OrderPopup = ({
           <hr></hr>
           <div
             className="
-                sticky top-10 flex flex-col items-center w-[100%] pt-4
+                sticky top-10 flex w-[100%] flex-col items-center pt-4
               "
           >
-            <div className="flex flex-row space-x-4 items-center">
+            <div className="flex flex-row items-center space-x-4">
               <FontAwesomeIcon
                 icon={faMinus}
                 className="
@@ -489,12 +489,12 @@ const OrderPopup = ({
             </div>
             <div
               className={
-                `rounded-xl bg-gradient-to-r py-2 px-4 mt-6 shadow-lg 
-                      w-[75%] text-center flex justify-between ` +
+                `mt-6 flex w-[75%] justify-between rounded-xl bg-gradient-to-r 
+                      px-4 py-2 text-center shadow-lg ` +
                 (requiredSelected()
                   ? `from-orange-300 to-red-400 hover:cursor-pointer 
                           hover:shadow-xl`
-                  : "from-slate-100 to-gray-300 text-red-700 ")
+                  : 'from-slate-100 to-gray-300 text-red-700 ')
               }
               onClick={
                 requiredSelected()
@@ -575,7 +575,7 @@ const MainPage = ({ restaurantData }) => {
 
   const [cookie, setCookie, _] =
     /** @type {ReturnType<typeof useCookies<"order", {[K in "order"]?: OrderCreate}>>} */
-    (useCookies(["order"]));
+    (useCookies(['order']));
 
   useMemo(() => {
     if (
@@ -583,7 +583,7 @@ const MainPage = ({ restaurantData }) => {
       cookie.order.restaurant_id != restaurantData.restaurant.id
     ) {
       setCookie(
-        "order",
+        'order',
         /**@type {OrderCreate} */ ({
           restaurant_id: restaurantData.restaurant.id,
           order_items: [],
@@ -593,7 +593,7 @@ const MainPage = ({ restaurantData }) => {
   }, []);
 
   if (cookie.order == null) {
-    throw new Error("Cookie is null");
+    throw new Error('Cookie is null');
   }
 
   const totlaQuantity = cookie.order.order_items.reduce(
@@ -622,17 +622,17 @@ const MainPage = ({ restaurantData }) => {
     // cookie.order must not be null
     const [cookie, setCookie, _] =
       /** @type {ReturnType<typeof useCookies<"order", {[K in "order"]?: OrderCreate}>>} */
-      (useCookies(["order"]));
+      (useCookies(['order']));
 
     if (cookie.order == null) {
-      throw new Error("Cookie is null");
+      throw new Error('Cookie is null');
     }
 
     if (page.popup == null) {
       return null;
     }
 
-    if (page.popup.type === "order") {
+    if (page.popup.type === 'order') {
       const menu_id = page.popup.menu_id;
       return (
         <OrderPopup
@@ -640,7 +640,7 @@ const MainPage = ({ restaurantData }) => {
           restaurantData={restaurantData}
           onConfirmation={(quantity, options, request) => {
             setCookie(
-              "order",
+              'order',
               /**@type {OrderCreate} */ ({
                 restaurant_id: restaurantData.restaurant.id,
                 order_items: [
@@ -668,10 +668,10 @@ const MainPage = ({ restaurantData }) => {
           defaultQuantity={1}
           defaultOptions={[]}
           defaultRequest=""
-          confirmationText={"Add to Basket"}
+          confirmationText={'Add to Basket'}
         />
       );
-    } else if (page.popup.type === "basket") {
+    } else if (page.popup.type === 'basket') {
       return (
         <BasketPopup
           queue={restaurantData.queue}
@@ -679,7 +679,7 @@ const MainPage = ({ restaurantData }) => {
           restaurantData={restaurantData}
           onClose={(orders) => {
             setCookie(
-              "order",
+              'order',
               /**@type {OrderCreate} */ ({
                 restaurant_id: restaurantData.restaurant.id,
                 order_items: orders,
@@ -697,115 +697,122 @@ const MainPage = ({ restaurantData }) => {
   };
 
   return (
-    <div className="mx-auto">
-      <img
-        src={restaurantData.image}
-        className="
-          top-0 absolute w-[100%] h-auto max-h-[25vh] object-center object-cover 
-          min-h-40 drop-shadow-2xl
+    <div className="flex min-h-svh flex-col">
+      <div className="sticky top-0 z-[10]">
+        <Header />
+      </div>
+      <div className="relative">
+        <img
+          src={restaurantData.image}
+          className="
+          h-52 w-full object-cover object-center drop-shadow-2xl
         "
-      />
-      <div
-        className="
-        bg-slate-50 rounded-xl md:w-fit p-4 mx-4 md:mx-auto md:min-w-[50%] 
-          mt-20 drop-shadow-xl
+        />
+        <div className="absolute left-0 right-0 top-16">
+          <div
+            className="
+          mx-4 rounded-xl bg-slate-50 p-4 drop-shadow-xl md:mx-auto md:w-fit 
+            md:min-w-[50%]
         "
-      >
-        <div className="flex justify-between pb-4">
-          <div className="text-2xl font-semibold h-fit">
-            {restaurantData.restaurant.name}
-          </div>
-          <FontAwesomeIcon icon={faLocationDot} className="self-center" />
-        </div>
-        <hr></hr>
-        <div>
-          <div className="flex justify-between">
-            <div className="text-red-800 text-sm p-1">Busy</div>
-          </div>
-          <hr></hr>
-          <div className="flex justify-between text-sm p-1">
-            <div>Queues</div>
+          >
+            <div className="flex justify-between pb-4">
+              <div className="h-fit text-2xl font-semibold">
+                {restaurantData.restaurant.name}
+              </div>
+              <FontAwesomeIcon icon={faLocationDot} className="self-center" />
+            </div>
+            <hr></hr>
             <div>
-              {restaurantData.queue.queue_count == 0
-                ? "None"
-                : `${restaurantData.queue.queue_count} queue(s)`}
+              <div className="flex justify-between">
+                <div className="p-1 text-sm text-red-800">Busy</div>
+              </div>
+              <hr></hr>
+              <div className="flex justify-between p-1 text-sm">
+                <div>Queues</div>
+                <div>
+                  {restaurantData.queue.queue_count == 0
+                    ? 'None'
+                    : `${restaurantData.queue.queue_count} queue(s)`}
+                </div>
+              </div>
+              <hr></hr>
+              <div className="flex justify-between p-1 text-sm">
+                <div>Estimated Time</div>
+                <div>
+                  {restaurantData.queue.estimated_time == 0
+                    ? 'None'
+                    : `${restaurantData.queue.estimated_time} min(s)`}
+                </div>
+              </div>
+              <hr></hr>
+              <div className="flex justify-between p-1 text-sm">
+                <div>Rating and Review</div>
+                <div>4.7/5.0</div>
+              </div>
+              <hr></hr>
             </div>
           </div>
-          <hr></hr>
-          <div className="flex justify-between text-sm p-1">
-            <div>Estimated Time</div>
-            <div>
-              {restaurantData.queue.estimated_time == 0
-                ? "None"
-                : `${restaurantData.queue.estimated_time} min(s)`}
-            </div>
-          </div>
-          <hr></hr>
-          <div className="flex justify-between text-sm p-1">
-            <div>Rating and Review</div>
-            <div>4.7/5.0</div>
-          </div>
-          <hr></hr>
         </div>
       </div>
+
       <div
         className="
-          flex flex-col my-8 mx-4 justify-center gap-x-2 gap-y-2 md:flex-row
-          md:flex-wrap
+          mx-4 mt-20 flex grow flex-col justify-center gap-x-2 gap-y-2
+          md:flex-row md:flex-wrap
         "
       >
         {Object.entries(restaurantData.menus).map(
           ([/** @type {number} */ id, menu]) => (
             <div
               className="
-              bg-slate-50 rounded-2xl shadow-lg hover:shadow-xl flex 
-                flex-row h-32 max-h-32 md:flex-col md:h-auto md:max-h-none 
-                md:w-64 md:max-w-64 overflow-hidden
+              flex h-32 max-h-32 flex-row overflow-hidden 
+                rounded-2xl bg-slate-50 shadow-lg hover:shadow-xl md:h-fit md:max-h-none
+                md:w-64 md:max-w-64 md:flex-col
               "
               key={id}
             >
               <img
                 src={menu.image}
                 className="
-                aspect-square h-full w-auto p-2 object-cover object-center
-                rounded-xl drop-shadow-sm md:p-0 md:rounded-none
+                aspect-square h-full w-auto rounded-xl object-cover object-center p-2 drop-shadow-sm
+                md:h-auto md:w-full md:rounded-none md:p-0
               "
               />
-              <div className="flex justify-between p-2 grow">
+              <div className="flex grow justify-between p-2">
                 <div className="flex flex-col">
-                  <div className="text-lg font-semibold line-clamp-1">
+                  <div className="line-clamp-1 text-lg font-semibold">
                     {menu.menu.name}
                   </div>
-                  <div className="text-sm mt-4 line-clamp-1">
+                  <div className="mt-4 line-clamp-1 text-sm">
                     {menu.menu.description}
                   </div>
-                  <div className="text-sm mt-4 line-clamp-1">
+                  <div className="mt-4 line-clamp-1 text-sm">
                     {`฿${menu.menu.price}`}
                   </div>
-                  <div className="gap-x-2 mt-4 hidden md:flex">
+                  <div className="mt-4 hidden gap-x-2 md:flex">
                     <FontAwesomeIcon
-                      className="text-sm self-center"
+                      className="self-center text-sm"
                       icon={faClock}
                     />
-                    <div className="text-sm line-clamp-1">
+                    <div className="line-clamp-1 text-sm">
                       {menu.menu.estimated_prep_time == null
-                        ? "Not Specified"
+                        ? 'Not Specified'
                         : `${menu.menu.estimated_prep_time} mins`}
                     </div>
                   </div>
                 </div>
                 <FontAwesomeIcon
                   className="
-                  rounded-full bg-green-400 p-2 shadow-sm self-end text-sm
-                  hover:cursor-pointer  hover:shadow-lg hover:bg-green-500
-                  mb-1
+                  mb-1 self-end rounded-full bg-green-400 p-2 text-sm
+                  shadow-sm  hover:cursor-pointer hover:bg-green-500
+                  hover:shadow-lg
                 "
                   icon={faPlus}
                   onClick={async () => {
                     setPage({
                       ...page,
                       popup: {
-                        type: "order",
+                        type: 'order',
                         menu_id: Number(id),
                       },
                     });
@@ -818,9 +825,9 @@ const MainPage = ({ restaurantData }) => {
       </div>
       <div
         className="
-          sticky bottom-5 mx-auto text-center bg-gradient-to-r from-orange-300 
-          to-red-400 rounded-xl px-6 py-2 z-2 drop-shadow-xl flex min-w-50
-          justify-between w-[50%] hover:cursor-pointer hover:shadow-2xl
+          z-2 min-w-50 sticky bottom-5 mx-auto my-5 
+          flex w-[50%] justify-between rounded-xl bg-gradient-to-r from-orange-300 to-red-400 px-6
+          py-2 text-center drop-shadow-xl hover:cursor-pointer hover:shadow-2xl
         "
         onClick={
           totlaQuantity == 0
@@ -829,17 +836,17 @@ const MainPage = ({ restaurantData }) => {
                 setPage({
                   ...page,
                   popup: {
-                    type: "basket",
+                    type: 'basket',
                   },
                 });
               }
         }
       >
-        <div className="flex gap-x-2 items-center">
+        <div className="flex items-center gap-x-2">
           <FontAwesomeIcon icon={faBasketShopping} className="text" />
           <div>{`x${totlaQuantity}`}</div>
         </div>
-        <div>{totlaQuantity == 0 ? "No Orders" : `฿${totalPrice}`}</div>
+        <div>{totlaQuantity == 0 ? 'No Orders' : `฿${totalPrice}`}</div>
       </div>
       <Popup page={page} setPage={setPage} />
     </div>
@@ -871,7 +878,7 @@ const Restaurant = () => {
   const { restaurantID: restaurantIDString } = useParams();
 
   if (restaurantIDString == null) {
-    throw new Error("Restaurant ID is not provided");
+    throw new Error('Restaurant ID is not provided');
   }
 
   const [restaurant, setRestaurant] = useState(
