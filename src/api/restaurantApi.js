@@ -116,7 +116,6 @@ export const getMenuCustomizations = async (menuID) => {
 export const searchRestaurants = async (name, limit) => {
     const restaurants = await axios.get(
         process.env.QUICKDISH_BACKEND_URL + `/restaurants/search`,
-        null,
         {
             params: {
                 query: name,
